@@ -11,7 +11,8 @@ sensor_msgs::Imu imu;
 sensor_msgs::JointState joint_states;
 tf2_msgs::TFMessage transform;
 geometry_msgs::Twist cmd_vel;
-int motor_right, motor_left;
+
+int motor_right_pin1 = 2, motor_right_pin1 = 3, motor_left_pin1 = 4, motor_left_pin1 = 5;
 
 //Calculate motor velocities inside this
 void velocity_callback(const geometry_msgs::Twist& vel_msg)
@@ -56,6 +57,15 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("Starting...");
+  
+  pinMode(motor_right_pin1, OUTPUT);
+  pinMode(motor_right_pin2, OUTPUT);
+  pinMode(motor_left_pin1, OUTPUT);
+  pinMode(motor_left_pin2, OUTPUT);
+
+  pinMode(9, OUTPUT); 
+  pinMode(10, OUTPUT);
+  
   node.initNode();
   node.advertise(odometry_publisher);
   node.advertise(imu_publisher);
@@ -67,6 +77,25 @@ void setup()
 //Write your program logic
 void loop()
 {
+  //Controlling speed (0 = off and 255 = max speed):
+  analogWrite(9, 100); //ENA pin
+  analogWrite(10, 200); //ENB pin
+
+  //Controlling spin direction of motors:
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+  delay(1000);
+
+  digitalWrite(motor1pin1, LOW);
+  digitalWrite(motor1pin2, HIGH);
+
+  digitalWrite(motor2pin1, LOW);
+  digitalWrite(motor2pin2, HIGH);
+  delay(1000);
+  
   node.spinOnce();
   delay(100);
 }
