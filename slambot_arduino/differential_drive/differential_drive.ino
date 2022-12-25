@@ -1,55 +1,72 @@
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
-#include <std_msgs/String.h>
+#include <sensor_msgs/Imu.h>
+#include <sensor_msgs/JointState.h>
+#include <tf2_msgs/TFMessage.h>
 
-//Declare global objects and variables
-ros::NodeHandle  node;
+//Declare global variables
+nav_msgs::Odometry odometry;
+sensor_msgs::Imu imu;
+sensor_msgs::JointState joint_state;
+tf2_msgs::TFMessage transform;
+geometry_msgs::Twist cmd_vel;
+int motor_right, motor_left;
 
-class SLAMbot
+//Calculate motor velocities inside this
+void velocity_callback(const geometry_msgs::Twist& vel_msg)
 {
-  private:
-  geometry_msgs::Twist velocity;
-  nav_msgs::Odometry odom;
-  std_msgs::String string_message;
-  float v_l, v_r, w;
-  ros::Subscriber<geometry_msgs::Twist, SLAMbot> velocity_sub;
-  ros::Publisher odometry_pub;
+  
+}
 
-  public:
-  //Declare constructor
-  SLAMbot() : velocity_sub("cmd_vel", &SLAMbot::velocity_callback, this), odometry_pub("odom", &odom)
-  {}
+//Declare global objects
+ros::NodeHandle  node;
+ros::Publisher odometry_publisher("odom", &odometry);
+ros::Publisher imu_publisher("imu", &imu);
+ros::Publisher joint_state_publisher("imu", &joint_state);
+ros::Publisher transform_publisher("imu", &transform);
+ros::Subscriber<geometry_msgs::Twist> twist_subscriber("cmd_vel", velocity_callback);
 
-  //Declare functions
-  void init(ros::NodeHandle& node)
-  {
-    node.subscribe(velocity_sub);
-    node.advertise(odometry_pub);
-  }
-  void CalculateOdom()
-  {
-    
-  }
+//Calculate transform for base_footprint
+void calculate_transform()
+{
+  
+}
 
-  //Declare callbacks
-  void velocity_callback(const geometry_msgs::Twist& msg){
-    velocity = msg;
-  }
-};
+//Calculate odometry from encoder values
+void calculate_odometry()
+{
+  
+}
 
-SLAMbot bot;
+//Calculate joint states from encoder values
+void calculate_joint_states()
+{
+  
+}
 
-//Initialise nodes, publishers and subscribers
+//Calculate acceleration from IMU values
+void calculate_imu()
+{
+  
+}
+
+//Initialise nodes, publishers, subscribers and serial monitor
 void setup()
 {
+  Serial.begin(115200);
+  Serial.println("Starting...");
   node.initNode();
-  bot.init(node);
+  node.advertise(odometry_publisher);
+  node.advertise(imu_publisher);
+  node.advertise(transform_publisher);
+  node.advertise(joint_state_publisher);
+  node.subscribe(twist_subscriber);
 }
 
 //Write your program logic
 void loop()
 {
   node.spinOnce();
-  delay(1);
+  delay(100);
 }
