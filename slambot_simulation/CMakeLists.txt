@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  actionlib_msgs
+  actionlib
+  move_base_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -141,6 +144,10 @@ include_directories(
 add_executable(turtlebot3_move src/turtlebot3_move.cpp)
 target_link_libraries(turtlebot3_move ${catkin_LIBRARIES})
 add_dependencies(turtlebot3_move ${catkin_EXPORTED_TARGETS})
+
+add_executable(slam_navigation src/slam_navigation.cpp)
+target_link_libraries(slam_navigation ${catkin_LIBRARIES})
+add_dependencies(slam_navigation ${catkin_EXPORTED_TARGETS})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
