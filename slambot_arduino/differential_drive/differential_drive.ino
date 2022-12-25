@@ -8,7 +8,7 @@
 //Declare global variables
 nav_msgs::Odometry odometry;
 sensor_msgs::Imu imu;
-sensor_msgs::JointState joint_state;
+sensor_msgs::JointState joint_states;
 tf2_msgs::TFMessage transform;
 geometry_msgs::Twist cmd_vel;
 int motor_right, motor_left;
@@ -23,8 +23,8 @@ void velocity_callback(const geometry_msgs::Twist& vel_msg)
 ros::NodeHandle  node;
 ros::Publisher odometry_publisher("odom", &odometry);
 ros::Publisher imu_publisher("imu", &imu);
-ros::Publisher joint_state_publisher("imu", &joint_state);
-ros::Publisher transform_publisher("imu", &transform);
+ros::Publisher joint_state_publisher("joint_states", &joint_states);
+ros::Publisher transform_publisher("tf", &transform);
 ros::Subscriber<geometry_msgs::Twist> twist_subscriber("cmd_vel", velocity_callback);
 
 //Calculate transform for base_footprint
