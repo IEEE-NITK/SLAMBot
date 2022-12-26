@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(slambot_simulation)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+# add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -109,10 +109,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES slambot_simulation
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs
-  DEPENDS system_lib
+#  INCLUDE_DIRS include
+#  LIBRARIES slambot_simulation
+#  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs
+#  DEPENDS system_lib
 )
 
 ###########
@@ -122,12 +122,10 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
- include
+# include
   ${catkin_INCLUDE_DIRS}
 )
-find_package(gazebo REQUIRED)
-include_directories(${GAZEBO_INCLUDE_DIRS})
-link_directories(${GAZEBO_LIBRARY_DIRS})
+
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/slambot_simulation.cpp
@@ -143,13 +141,13 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/slambot_simulation_node.cpp)
 
-add_executable(turtlebot3_move src/turtlebot3_move.cpp)
-target_link_libraries(turtlebot3_move ${catkin_LIBRARIES})
-add_dependencies(turtlebot3_move ${catkin_EXPORTED_TARGETS})
+add_executable(template_code src/template_code.cpp)
+target_link_libraries(template_code ${catkin_LIBRARIES})
+add_dependencies(template_code ${catkin_EXPORTED_TARGETS})
 
-add_executable(slam_navigation src/slam_navigation.cpp)
-target_link_libraries(slam_navigation ${catkin_LIBRARIES})
-add_dependencies(slam_navigation ${catkin_EXPORTED_TARGETS})
+add_executable(goal_navigation src/goal_navigation.cpp)
+target_link_libraries(goal_navigation ${catkin_LIBRARIES})
+add_dependencies(goal_navigation ${catkin_EXPORTED_TARGETS})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
