@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<robot name="slambot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find slambot_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find slambot_description)/urdf/slambot.trans" />
+<xacro:include filename="$(find slambot_description)/urdf/slambot.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.0028609830961275323 -0.000286365483198192 0.05511570528182615" rpy="0 0 0"/>
+    <mass value="5.29438449819002"/>
+    <inertia ixx="0.018437" iyy="0.018264" izz="0.012718" ixy="4e-05" iyz="5.8e-05" ixz="0.000436"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="opaque898684"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_right_1">
+  <inertial>
+    <origin xyz="1.479699400397383e-06 -0.00781748340988625 8.287650255130175e-08" rpy="0 0 0"/>
+    <mass value="0.2346100571054497"/>
+    <inertia ixx="9e-05" iyy="0.000167" izz="9e-05" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.03275 0.0722 -0.01395" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_right_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.03275 0.0722 -0.01395" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_right_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_left_1">
+  <inertial>
+    <origin xyz="1.479699400265544e-06 0.007817483409885487 -8.287650262069068e-08" rpy="0 0 0"/>
+    <mass value="0.2346100571054497"/>
+    <inertia ixx="9e-05" iyy="0.000167" izz="9e-05" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.03275 -0.0722 -0.01425" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_left_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.03275 -0.0722 -0.01425" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_left_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_caster_1">
+  <inertial>
+    <origin xyz="-0.045000594596254544 1.735967801928781e-05 -0.0035532637779972735" rpy="0 0 0"/>
+    <mass value="0.0054901244015141525"/>
+    <inertia ixx="0.0" iyy="0.0" izz="0.0" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_caster_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="steel_satin"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 0.008" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/wheel_caster_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="lidar_1">
+  <inertial>
+    <origin xyz="-0.008711210990347882 -9.192611113989587e-05 0.03526812773284038" rpy="0 0 0"/>
+    <mass value="1.3392997077576572"/>
+    <inertia ixx="0.000619" iyy="0.000967" izz="0.001105" ixy="-1e-06" iyz="-3e-06" ixz="0.000159"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.132" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="coating_black_oxide"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.132" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://slambot_description/meshes/lidar_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="motor_right" type="continuous">
+  <origin xyz="0.03275 -0.0722 0.01395" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_right_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="motor_left" type="continuous">
+  <origin xyz="0.03275 0.0722 0.01425" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_left_1"/>
+  <axis xyz="-0.0 1.0 -0.0"/>
+</joint>
+
+<joint name="caster_joint" type="fixed">
+  <origin xyz="0.0 0.0 -0.008" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_caster_1"/>
+</joint>
+
+<joint name="lidar_joint" type="fixed">
+  <origin xyz="0.0 0.0 0.132" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="lidar_1"/>
+</joint>
+
+</robot>
