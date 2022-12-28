@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  actionlib_msgs
+  actionlib
+  move_base_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -138,9 +141,13 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/slambot_simulation_node.cpp)
 
-add_executable(turtlebot3_move src/turtlebot3_move.cpp)
-target_link_libraries(turtlebot3_move ${catkin_LIBRARIES})
-add_dependencies(turtlebot3_move ${catkin_EXPORTED_TARGETS})
+add_executable(template_code src/template_code.cpp)
+target_link_libraries(template_code ${catkin_LIBRARIES})
+add_dependencies(template_code ${catkin_EXPORTED_TARGETS})
+
+add_executable(goal_navigation src/goal_navigation.cpp)
+target_link_libraries(goal_navigation ${catkin_LIBRARIES})
+add_dependencies(goal_navigation ${catkin_EXPORTED_TARGETS})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
