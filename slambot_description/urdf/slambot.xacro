@@ -3,7 +3,10 @@
 
 <xacro:include filename="$(find slambot_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find slambot_description)/urdf/slambot.trans" />
-<xacro:include filename="$(find slambot_description)/urdf/slambot.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_materials.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_physics.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_plugins.gazebo" />
+
 <link name="base_link">
   <inertial>
     <origin xyz="0.0028609830961275496 -0.00028636548319819235 0.07416570528182598" rpy="0 0 0"/>
