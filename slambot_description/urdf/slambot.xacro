@@ -3,7 +3,11 @@
 
 <xacro:include filename="$(find slambot_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find slambot_description)/urdf/slambot.trans" />
-<xacro:include filename="$(find slambot_description)/urdf/slambot.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_materials.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_physics.gazebo" />
+<xacro:include filename="$(find slambot_description)/gazebo/slambot_plugins.gazebo" />
+
+<link name="base_footprint"/>
 <link name="base_link">
   <inertial>
     <origin xyz="0.0028609830961275496 -0.00028636548319819235 0.07416570528182598" rpy="0 0 0"/>
@@ -108,6 +112,11 @@
     </geometry>
   </collision>
 </link>
+
+<joint name="base_joint" type="fixed">
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+</joint>
 
 <joint name="motor_right" type="continuous">
   <origin xyz="0.03275 -0.0722 0.033" rpy="0 0 0"/>
