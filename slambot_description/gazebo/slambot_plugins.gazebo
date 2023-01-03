@@ -18,11 +18,14 @@
     <odometryTopic>odom</odometryTopic> <!-- Topic to publish nav_msgs/Odometry messages, defaults to `odom` -->
     <odometryFrame>odom</odometryFrame> <!-- Odometry frame, defaults to `odom` -->
     <robotBaseFrame>base_footprint</robotBaseFrame> <!-- Robot frame to calculate odometry from, defaults to `base_footprint` -->
-    <odometrySource>1</odometrySource> <!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+    <odometrySource>encoder</odometrySource> <!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
     <publishWheelTF>true</publishWheelTF> <!-- Set to true to publish transforms for the wheel links, defaults to false -->
     <publishOdom>true</publishOdom> <!-- Set to true to publish transforms for the odometry, defaults to true -->
     <publishWheelJointState>true</publishWheelJointState> <!-- Set to true to publish sensor_msgs/JointState on /joint_states for the wheel joints, defaults to false -->
     <legacyMode>false</legacyMode> <!-- Set to true to swap right and left wheels, defaults to true -->
+    <rosDebugLevel>na</rosDebugLevel>
+    <publishOdomTF>true</publishOdomTF>
+    <publishTf>true</publishTf>
   </plugin>
 </gazebo>
 
