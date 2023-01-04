@@ -1,5 +1,47 @@
 # SLAMBot
 
+[![GitHub issues](https://img.shields.io/github/issues/IEEE-NITK/SLAMBot?color=red&label=Issues&style=flat)](https://github.com/IEEE-NITK/SLAMBot/issues)
+[![GitHub license](https://img.shields.io/github/license/IEEE-NITK/SLAMBot?color=green&label=License&style=flat)](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
+![Ubuntu](https://img.shields.io/badge/Ubuntu%2020.04-%E2%9C%94-blue)
+![ROS Noetic](https://img.shields.io/badge/ROS%20Noetic-%E2%9C%94-blue)
+
+### Table of Contents
+<ol>
+    <li>
+        <a href="#introduction">Introduction</a>
+        <ul>
+            <li><a href="#technologies-used">Technologies Used</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#getting-started">Getting Started</a>
+        <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        </ul>
+    </li>
+</ol>
+
+<hr>
+
+## Introduction
+
+<b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
+
+This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
+
+### Technologies Used
+[![Tech_Used](https://skills.thijs.gg/icons?i=ros,py,cpp,arduino,raspberrypi&theme=dark)](https://skills.thijs.gg)
+
+## Getting Started
+
+### Prerequisites
+
+* Ubutnu 20.04
+* ROS Noetic
+
+### Installation
+
 Clone this repository in your ROS workspace and build your packages using `catkin build`.
 
 Launch the TurtleBot3 simulation using the following command:
