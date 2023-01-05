@@ -5,6 +5,7 @@
   <plugin name="control" filename="libgazebo_ros_control.so"/>
 </gazebo>
 
+<!--Differential Drive-->
 <gazebo>
   <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
     <updateRate>10.0</updateRate> <!-- Plugin update rate in Hz -->
@@ -27,6 +28,39 @@
     <publishOdomTF>true</publishOdomTF>
     <publishTf>true</publishTf>
   </plugin>
+</gazebo>
+
+<!-- LIDAR -->
+<gazebo reference="lidar_1">
+  <sensor type="ray" name="lidar_sensor">
+    <pose>0 0 0 0 0 0</pose>
+    <visualize>true</visualize>
+    <update_rate>40</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>720</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14159</min_angle>
+          <max_angle>3.14159</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.10</min>
+        <max>6.00</max>
+        <resolution>0.01</resolution>
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.01</stddev>
+      </noise>
+    </ray>
+    <plugin name="gazebo_ros_lidar_controller" filename="libgazebo_ros_laser.so">
+      <topicName>/slambot/laser/scan</topicName>
+      <frameName>lidar_1</frameName>
+    </plugin>
+  </sensor>
 </gazebo>
 
 </robot>
