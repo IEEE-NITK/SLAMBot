@@ -43,7 +43,7 @@ This project aims to put together a mobile robot similar to a TurtleBot. A Turtl
 
 ### Prerequisites
 
-* Ubutnu 20.04
+* Ubuntu 20.04
 * ROS Noetic
 
 ### Installation
