@@ -22,12 +22,12 @@
         </ul>
     </li>
     <li>
-         <a href="#getting-started part 2">Getting Started part 2</a>
+         <a href="#getting-started-part-2">Getting Started part 2</a>
          <ul>
-         <li><a href="#launching gazebo">Launching gazebo</a></li>
-         <li><a href="#SLAM Creating a Map">SLAM: Creating a Map</a></li>
-         <li><a href="#Save the Map">Save the Map</a></li>
-         <li><a href="#SLAM Autonomous Navigation">SLAM: Autonomous Navigation</a></li>
+         <li><a href="#launching-gazebo">Launching gazebo</a></li>
+         <li><a href="#SLAM-Creating-a-Map">SLAM: Creating a Map</a></li>
+         <li><a href="#Save-the-Map">Save the Map</a></li>
+         <li><a href="#SLAM-Autonomous-Navigation">SLAM: Autonomous Navigation</a></li>
     </li>
 </ol>
 
