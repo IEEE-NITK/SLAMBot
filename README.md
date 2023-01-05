@@ -63,7 +63,7 @@ Arduino code for uploading to your embedded board is [here](/slambot_arduino/dif
 ```bash
 rosrun rosserial_arduino serial_node.py
 ```
-###Setup
+### Setup
 
 The upcoming commands are to edit the bashrc file so every time you open a new terminal, the terminal will have the right variables pre-defined. This command adds sourcing the devel/setup.bash file so new packages installed through apt are recognized by Catkin and your terminal:
 
@@ -80,7 +80,7 @@ Now source the .bashrc for these things to take effect:
 ```bash
 source ~/.bashrc
 ```
-##Launching gazebo
+## Launching gazebo
 
 We can launch the Turtlebot in our respective world with(replace house with our environment)
 ```bash
