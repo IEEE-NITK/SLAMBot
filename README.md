@@ -18,6 +18,7 @@
         <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#setup">Setup</a></li>
         </ul>
     </li>
 </ol>
