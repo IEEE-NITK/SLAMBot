@@ -82,8 +82,65 @@ source ~/.bashrc
 ```
 ## Launching gazebo
 
-We can launch the Turtlebot in our respective world with(replace house with our environment)
+We can launch the Turtlebot in our respective world with(replace house with our world)
 ```bash
 roslaunch turtlebot3_gazebo turtlebot3_house.launch
 ```
+To drive the TurtleBot around, we need to launch the TurtleBot Teleop node:
+```bash
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+### SLAM: Creating a Map
+
+Before we can autonomously drive around any world, we need to provide the robot with a map which will be used to localize (position) the robot relative to obstacles or features defined in the map. We will create a new map of the default world by doing the following:
+
+1. Launch the world in Gazebo
+2. Launch the mapping node
+3. Launch the mapping node
+4. Drive around and collect data from the robot's sensors until we have a (nearly) complete and accurate map.
+
+We will use the following commands to launch the files:
+```bash
+roslaunch turtlebot3_gazebo turtlebot3_world.launch
+````
+```bash
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+```
+```bash
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
+Now, with the terminal tab or window running the teleop node selected, drive the robot around using the W A D X and S keys.
+
+Once your map has all of the features defined (black for walls or obstacles, white for no obstacles, and gray/transparent for unknown regions), we need to save the map.
+
+## Save the Map
+
+n a new terminal tab or window, run:
+```bash
+rosrun map_server map_saver -f ~/map
+```
+Now we have created two files:
+1. map.pgm - the image containing the white, gray, and black regions.
+2. map.yaml - the configuration data for the map.pgm image.
+
+### SLAM: Autonomous Navigation
+
+Now that we have a map of our world, we can drive autonomously inside the world and the TurtleBot should avoid all obstacles in the map. To do this, we will:
+
+1. Launch the necessary scripts
+2. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
+3. Set target (goal) positions and orientations for the robot to drive to
+4. Have the robot navigate to the goal autonomously
+
+Let's launch the following scripts:
+```bash
+roslaunch turtlebot3_gazebo turtlebot3_world.launch
+```
+```bash
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+```
+Next, in rviz, we will select 2D Pose Estimate:
+
+
+
 
