@@ -152,18 +152,17 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map
 Next, in rviz, we will select 2D Pose Estimate:
 
 
-## Robot Model
+## Robot
+
+### Robot Model:
 
 The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller caster for additional base support. Its a small, affordable, programmable, ROS-based robot for use in education, research, hobby, and product prototyping.
 
 It consists of 4 layers:
 
 1.Lowermost layer: the propulsion group comprising of battery and motors.
-
 2.Second layer: consists of the power distribution board along with motor drivers.
-
 3.Third layer: has a single board computer, the RPi alongside the arduino microcontroller.
-
 4.Uppermost layer: comprises of the LIDAR
 
 The above mentioned plates are linkeed using printed parts, screws and supports to ensure robustness and stability of thr structure.
@@ -176,5 +175,19 @@ The model has a sensor called as a LIDAR system which is mounted at the center o
 
 A LIDAR (Light Detection and Ranging) system is centered around a sensor that sends out pulses of laser light using oscillating mirrors to measure the exact time it takes for these pulses to return as they bounce from the ground as well as the intensity of that reflection. The observed LIDAR data is used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
 
+### Robot Dynamics:
+
+
+## Project Mentors:
+
+1. [Shivani Chanda](https://github.com/Shivani-Chanda)
+2. [Spandan Patkar](https://github.com/SpandanPatkar)
+3. [Sunaina Sunil](https://github.com/SunainaSunil)
+
+## Project Members:
+
+1. [Joel Jojo](https://github.com/JoelJojoP)
+2. [Pooja M](https://github.com/pooja-murugiah)
+3. [Sakshi Bothra](https://github.com/Sakshi-1606)
 
 
