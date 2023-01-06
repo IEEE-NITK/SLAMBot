@@ -5,50 +5,52 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu%2020.04-%E2%9C%94-blue)
 ![ROS Noetic](https://img.shields.io/badge/ROS%20Noetic-%E2%9C%94-blue)
 
-### Table of Contents
-<ol>
-    <li>
-        <a href="#introduction">Introduction</a>
-        <ul>
-            <li><a href="#technologies-used">Technologies Used</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#literature-survey">Literature Survey</a>
-    </li>
-    <li>
-        <a href="#getting-started">Getting Started</a>
-        <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#setup">Setup</a></li>
-        </ul>
-    </li>
-    <li>
-         <a href="#getting-started-part-2">Getting Started part 2</a>
-         <ul>
-         <li><a href="#launching-gazebo">Launching gazebo</a></li>
-         <li><a href="#slam-creating-a-map">SLAM: Creating a Map</a></li>
-         <li><a href="#saving-the-map">Saving the Map</a></li>
-         <li><a href="#slam-autonomous-navigation">SLAM: Autonomous Navigation</a></li>
-         </ul>    
-    </li>
-    <li>
-        <a href="#robot">Robot</a>
-        <ul>
-            <li><a href="#robot-model">Robot Model</a></li>
-            <li><a href="#robot-dynamics">Robot Dynamics</a></li>
-            <li><a href="#robot-control">Robot Control</a></li>
-        </ul>    
-   </li>
-   <li>
-       <a href="#project-mentors">Project Mentors</a></li>
-   </li>
-    <li>
-       <a href="#project-members">Project Members</a></li>
-   </li>
-    
-</ol>
+<br>
+<details>
+  <summary>Table of Contents</summary>
+    <ol>
+        <li>
+            <a href="#introduction">Introduction</a>
+            <ul>
+                <li><a href="#technologies-used">Technologies Used</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#literature-survey">Literature Survey</a>
+        </li>
+        <li>
+            <a href="#getting-started">Getting Started</a>
+            <ul>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#setup">Setup</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#getting-started-part-2">Getting Started part 2</a>
+            <ul>
+            <li><a href="#launching-gazebo">Launching gazebo</a></li>
+            <li><a href="#slam-creating-a-map">SLAM: Creating a Map</a></li>
+            <li><a href="#saving-the-map">Saving the Map</a></li>
+            <li><a href="#slam-autonomous-navigation">SLAM: Autonomous Navigation</a></li>
+            </ul>    
+        </li>
+        <li>
+            <a href="#robot">Robot</a>
+            <ul>
+                <li><a href="#robot-model">Robot Model</a></li>
+                <li><a href="#robot-dynamics">Robot Dynamics</a></li>
+                <li><a href="#robot-control">Robot Control</a></li>
+            </ul>    
+        </li>
+        <li>
+            <a href="#project-mentors">Project Mentors</a></li>
+        </li>
+        <li>
+            <a href="#project-members">Project Members</a></li>
+        </li>    
+    </ol>
+</details>
 
 <hr>
 
