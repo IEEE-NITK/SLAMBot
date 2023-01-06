@@ -4,7 +4,7 @@
 [![GitHub license](https://img.shields.io/github/license/IEEE-NITK/SLAMBot?color=green&label=License&style=flat)](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu%2020.04-%E2%9C%94-blue)
 ![ROS Noetic](https://img.shields.io/badge/ROS%20Noetic-%E2%9C%94-blue)
-![Build Status](https://github.hcom/IEEE-NITK/SLAMBot/actions/workflows/ros-ci.yml/badge.svg)
+![Build Status](https://github.com/IEEE-NITK/SLAMBot/actions/workflows/ros-ci.yml/badge.svg)
 
 <br>
 <details>
