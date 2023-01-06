@@ -152,7 +152,7 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map
 Next, in rviz, we will select 2D Pose Estimate:
 
 
-##Robot Model
+## Robot Model
 
 The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller caster for additional base support. Its a small, affordable, programmable, ROS-based robot for use in education, research, hobby, and product prototyping.
 
