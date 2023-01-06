@@ -14,6 +14,9 @@
         </ul>
     </li>
     <li>
+        <a href="#literature-survey">Literature Survey</a>
+    </li>
+    <li>
         <a href="#getting-started">Getting Started</a>
         <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -25,24 +28,24 @@
          <a href="#getting-started-part-2">Getting Started part 2</a>
          <ul>
          <li><a href="#launching-gazebo">Launching gazebo</a></li>
-         <li><a href="#SLAM-Creating-a-Map">SLAM: Creating a Map</a></li>
-         <li><a href="#Save-the-Map">Save the Map</a></li>
-         <li><a href="#SLAM-Autonomous-Navigation">SLAM: Autonomous Navigation</a></li>
+         <li><a href="#slam-creating-a-map">SLAM: Creating a Map</a></li>
+         <li><a href="#saving-the-map">Saving the Map</a></li>
+         <li><a href="#slam-autonomous-navigation">SLAM: Autonomous Navigation</a></li>
          </ul>    
     </li>
     <li>
-        <a href="#Robot">Robot</a>
+        <a href="#robot">Robot</a>
         <ul>
-            <li><a href="#Robot-Model">Robot Model</a></li>
-            <li><a href="#Robot-Dynamics">Robot Dynamics</a></li>
-            <li><a href="#Robot-Control">Robot Control</a></li>
+            <li><a href="#robot-model">Robot Model</a></li>
+            <li><a href="#robot-dynamics">Robot Dynamics</a></li>
+            <li><a href="#robot-control">Robot Control</a></li>
         </ul>    
    </li>
    <li>
-       <a href="#Project-Mentors">Project Mentors</a></li>
+       <a href="#project-mentors">Project Mentors</a></li>
    </li>
     <li>
-       <a href="#Project-Members">Project Members</a></li>
+       <a href="#project-members">Project Members</a></li>
    </li>
     
 </ol>
@@ -63,6 +66,34 @@ This project aims to put together a mobile robot similar to a TurtleBot. A Turtl
 
 ### Technologies Used
 [![Tech_Used](https://skills.thijs.gg/icons?i=ros,py,cpp,arduino,raspberrypi&theme=dark)](https://skills.thijs.gg)
+
+## Literature Survey
+
+### Robot Operating System (ROS)
+
+ROS is an open-source, meta-operating system to operate robots. ROS provides the services of an operating system such as hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. ROS also provides tools and libraries for obtaining, building, writing and running code across multiple computers. ROS currently only runs on Unix-based platforms. Software for ROS is primarily tested on Ubuntu and Mac OS X systems, though the ROS community has been contributing support for Fedora, Gentoo, Arch Linux and other Linux platforms.
+
+### Basic Terminologies in ROS:
+
+* Nodes: A node is an executable that uses ROS to communicate with other nodes. A ROS Node can be a Publisher or a Subscriber. A Publisher puts the messages of a standard message type to a particular topic. The Subscriber, on the other hand, subscribes to the topic and receives the messages that are published to the topic.
+* Messages: ROS data type used upon subscribing or publishing to a topic.
+* Topics: Nodes can publish messages to a topic as well as subscribe to a topic to receive messages.
+* Master: Name service for ROS (i.e. helps nodes find each other)
+* rosout: ROS equivalent of stdout/stderr
+* roscore: Master + rosout + parameter server (parameter server will be introduced later)
+
+Client libraries needed for this project: 
+* rospy: python client library 
+* roscpp: c++ client library
+
+### Turtlebot
+
+TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
+<p>
+    <img src="Assets/turtlebot3.png"> 
+    <br>
+    <em>Turtlebot3 - Burger and Waffle</em>
+</p>
 
 ## Getting Started
 
@@ -139,7 +170,7 @@ Now, with the terminal tab or window running the teleop node selected, drive the
 
 Once your map has all of the features defined (black for walls or obstacles, white for no obstacles, and gray/transparent for unknown regions), we need to save the map.
 
-### Save the Map
+### Saving the Map
 
 n a new terminal tab or window, run:
 ```bash
@@ -181,11 +212,11 @@ It consists of 4 layers:
 3.Third layer: has a single board computer, the RPi alongside the arduino microcontroller.
 4.Uppermost layer: comprises of the LIDAR
 
-The above mentioned plates are linkeed using printed parts, screws and supports to ensure robustness and stability of thr structure.
+The above mentioned plates are linkeed using printed parts, screws and supports to ensure robustness and stability of the structure.
 
 The design of the bot was developed on Fusion360, a 3D modelling CAD software. It was then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by .stl files of the model as well as .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
 
-The drone is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
+The robot is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
 
 The model has a sensor called as a LIDAR system which is mounted at the center of the topmost plate of the body.
 
@@ -202,7 +233,7 @@ A LIDAR (Light Detection and Ranging) system is centered around a sensor that se
 
 ## Project Members:
 
-1. [Joel Jojo](https://github.com/JoelJojoP)
+1. [Joel Jojo Painuthara](https://github.com/JoelJojoP)
 2. [Pooja M](https://github.com/pooja-murugiah)
 3. [Sakshi Bothra](https://github.com/Sakshi-1606)
 
