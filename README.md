@@ -28,7 +28,23 @@
          <li><a href="#SLAM-Creating-a-Map">SLAM: Creating a Map</a></li>
          <li><a href="#Save-the-Map">Save the Map</a></li>
          <li><a href="#SLAM-Autonomous-Navigation">SLAM: Autonomous Navigation</a></li>
+         </ul>    
     </li>
+    <li>
+        <a href="#Robot">Robot</a>
+        <ul>
+            <li><a href="#Robot-Model">Robot Model</a></li>
+            <li><a href="#Robot-Dynamics">Robot Dynamics</a></li>
+            <li><a href="#Robot-Control">Robot Control</a></li>
+        </ul>    
+   </li>
+   <li>
+       <a href="#Project-Mentors">Project Mentors</a></li>
+   </li>
+    <li>
+       <a href="#Project-Members">Project Members</a></li>
+   </li>
+    
 </ol>
 
 <hr>
