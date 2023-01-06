@@ -59,12 +59,12 @@
 
 <b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
 
-![Alt text](Assets/slam.png)
+![Alt text](assets/slam.png)
 *Turtlebot using SLAM to navigate across a map*
 
 This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
 
-![Alt text](Assets/slambot.png)
+![Alt text](assets/slambot.png)
 *SLAMBot*
 
 ### Technologies Used
@@ -93,7 +93,7 @@ Client libraries needed for this project:
 
 TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
 <p>
-    <img src="Assets/turtlebot3.png"> 
+    <img src="assets/turtlebot3.png"> 
     <br>
     <em>Turtlebot3 - Burger and Waffle</em>
 </p>
