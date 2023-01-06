@@ -152,5 +152,29 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map
 Next, in rviz, we will select 2D Pose Estimate:
 
 
+##Robot Model
+
+The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller caster for additional base support. Its a small, affordable, programmable, ROS-based robot for use in education, research, hobby, and product prototyping.
+
+It consists of 4 layers:
+
+1.Lowermost layer: the propulsion group comprising of battery and motors.
+
+2.Second layer: consists of the power distribution board along with motor drivers.
+
+3.Third layer: has a single board computer, the RPi alongside the arduino microcontroller.
+
+4.Uppermost layer: comprises of the LIDAR
+
+The above mentioned plates are linkeed using printed parts, screws and supports to ensure robustness and stability of thr structure.
+
+The design of the bot was developed on Fusion360, a 3D modelling CAD software. It was then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by .stl files of the model as well as .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
+
+The drone is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
+
+The model has a sensor called as a LIDAR system which is mounted at the center of the topmost plate of the body.
+
+A LIDAR (Light Detection and Ranging) system is centered around a sensor that sends out pulses of laser light using oscillating mirrors to measure the exact time it takes for these pulses to return as they bounce from the ground as well as the intensity of that reflection. The observed LIDAR data is used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
+
 
 
