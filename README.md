@@ -18,31 +18,31 @@
         </li>
         <li>
             <a href="#literature-survey">Literature Survey</a>
+            <ul>
+                <li><a href="#robot-operating-system-ros">Robot Operating System (ROS)</a></li>
+                <li><a href="#basic-terminologies-in-ros">Basic Terminologies in ROS</a></li>
+                <li><a href="#turtlebot">Turtlebot</a></li>
+                <li><a href="#lidar">LIDAR</a></li>
+            </ul>
         </li>
         <li>
             <a href="#getting-started">Getting Started</a>
             <ul>
             <li><a href="#prerequisites">Prerequisites</a></li>
             <li><a href="#installation">Installation</a></li>
-            <li><a href="#setup">Setup</a></li>
             </ul>
         </li>
         <li>
-            <a href="#getting-started-part-2">Getting Started part 2</a>
-            <ul>
-            <li><a href="#launching-gazebo">Launching gazebo</a></li>
-            <li><a href="#slam-creating-a-map">SLAM: Creating a Map</a></li>
-            <li><a href="#saving-the-map">Saving the Map</a></li>
-            <li><a href="#slam-autonomous-navigation">SLAM: Autonomous Navigation</a></li>
-            </ul>    
+            <a href="#user-guide">User Guide</a>
+                <ul>
+                    <li><a href="#launching-gazebo-simulation">Launching Gazebo Simulation</a></li>
+                    <li><a href="#slam-creating-a-map">SLAM: Creating a Map</a></li>
+                    <li><a href="#saving-the-map">Saving the Map</a></li>
+                    <li><a href="#slam-autonomous-navigation">SLAM: Autonomous Navigation</a></li>
+                </ul>    
         </li>
         <li>
-            <a href="#robot">Robot</a>
-            <ul>
-                <li><a href="#robot-model">Robot Model</a></li>
-                <li><a href="#robot-dynamics">Robot Dynamics</a></li>
-                <li><a href="#robot-control">Robot Control</a></li>
-            </ul>    
+            <a href="#the-robot">The Robot</a> 
         </li>
         <li>
             <a href="#project-mentors">Project Mentors</a></li>
@@ -59,12 +59,12 @@
 
 <b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
 
-![Alt text](Assets/slam.png)
+![Alt text](assets/slam.png)
 *Turtlebot using SLAM to navigate across a map*
 
 This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
 
-![Alt text](Assets/slambot.png)
+![SlamBot](assets/slambot.png)
 *SLAMBot*
 
 ### Technologies Used
@@ -93,60 +93,70 @@ Client libraries needed for this project:
 
 TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
 <p>
-    <img src="Assets/turtlebot3.png"> 
+    <img src="assets/turtlebot3.png" alt="Turtlebot"> 
     <br>
-    <em>Turtlebot3 - Burger and Waffle</em>
+    <em>Turtlebot3 Models - Burger and Waffle</em>
 </p>
+
+### LIDAR
+
+A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a sensor that uses pulses of laser light to calculate the relative distances of various objects. A LiDAR system calculates how long it takes for beams of light to hit an object or surface and reflect back to the laser scanner. The distance is then calculated using the velocity of light.  The observed LIDAR data is then used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
 
 ## Getting Started
 
 ### Prerequisites
 
 * Ubuntu 20.04
-* ROS Noetic
+* ROS Noetic 
+
+> For installing ROS refer to [ROS Wiki](http://wiki.ros.org/noetic/Installation)
 
 ### Installation
 
-Clone this repository in a ROS workspace and build the packages using `catkin build`.
+Create a catkin workspace
 
-Launch the TurtleBot3 simulation using the following command:
+```bash
+mkdir ros_ws
+cd ros_ws
+mkdir src
+catkin build
+```
+To automatically source this workspace every time a new shell is launched, run these commands
+
+```bash
+echo "source ~/ros_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+Clone the repository in the `src` folder in the catkin workspace.
+
+```bash
+cd ~/ros_ws/src
+git clone https://github.com/IEEE-NITK/SLAMBot.git
+```
+
+Navigate back to the workspace folder and build the packages.
+
+```bash
+cd ~/ros_ws
+catkin build
+```
+
+## User Guide
+
+### Launching Gazebo Simulation
+
+To launch the gazebo simulation use the command
+
+```bash
+roslaunch slambot_simulation slambot_simulation.launch
+```
+or
 ```bash
 roslaunch slambot_simulation turtlebot_simulation.launch
 ```
 
-Basic move code C++ template is in [this](/slambot_simulation/src/turtlebot3_move.cpp) file. C++ code needs to be compiled in order to run. You can compile by adding your C++ file to CMakeLists.txt like [this](/slambot_simulation/CMakeLists.txt?plain=1#L141-L143), and then running `catkin build`.
-
-
-Arduino code for uploading to your embedded board is [here](/slambot_arduino/differential_drive/differential_drive.ino). Compile and upload the code using Arduino IDE. Run the rosserial server node on your connected computer to connect the ROS node on the board. This node needs to be running to "*activate*" your ROS node on your arduino board.
-
-```bash
-rosrun rosserial_arduino serial_node.py
-```
-### Setup
-
-The upcoming commands are to edit the bashrc file so every time you open a new terminal, the terminal will have the right variables pre-defined. This command adds sourcing the devel/setup.bash file so new packages installed through apt are recognized by Catkin and your terminal:
-
-```bash
-source ~/catkin_ws/devel/setup.bash
-```
-
-The default model used in our TurtleBot simulation to be the Burger model:
-```bash
-export TURTLEBOT3_MODEL=burger
-```
-
-Now source the .bashrc for these things to take effect:
-```bash
-source ~/.bashrc
-```
-## Getting Started part 2
-### Launching gazebo
-
-We can launch the Turtlebot in our respective world with(replace house with our world)
-```bash
-roslaunch turtlebot3_gazebo turtlebot3_house.launch
-```
-To drive the TurtleBot around, we need to launch the TurtleBot Teleop node:
+To move the robot around, we need to launch teleoperation keyboard:
 ```bash
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
@@ -156,36 +166,33 @@ Before we can autonomously drive around any world, we need to provide the robot 
 
 1. Launch the world in Gazebo
 2. Launch the mapping node
-3. Launch the mapping node
-4. Drive around and collect data from the robot's sensors until we have a (nearly) complete and accurate map.
+3. Drive around and collect data from the robot's sensors until we have a (nearly) complete and accurate map.
 
-We will use the following commands to launch the files:
-```bash
-roslaunch turtlebot3_gazebo turtlebot3_world.launch
-````
+After launching the gazebo simulation and teleoperation, use the following command to create a map using gmapping algorithm:
+
 ```bash
 roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
 ```
-```bash
-roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
-```
-Now, with the terminal tab or window running the teleop node selected, drive the robot around using the W A D X and S keys.
+
+Now, with the terminal running the teleop_key selected, drive the robot around using the W, A, D, X and S keys.
 
 Once your map has all of the features defined (black for walls or obstacles, white for no obstacles, and gray/transparent for unknown regions), we need to save the map.
 
 ### Saving the Map
 
-n a new terminal tab or window, run:
+In a new terminal, run:
+
 ```bash
 rosrun map_server map_saver -f ~/map
 ```
-Now we have created two files:
-1. map.pgm - the image containing the white, gray, and black regions.
-2. map.yaml - the configuration data for the map.pgm image.
+
+This will create two files:
+* map.pgm - the image containing the white, gray, and black regions.
+* map.yaml - the configuration data for the map.pgm image.
 
 ### SLAM: Autonomous Navigation
 
-Now that we have a map of our world, we can drive autonomously inside the world and the TurtleBot should avoid all obstacles in the map. To do this, we will:
+Now that we have a map of the world, we can drive the robot autonomously inside the world. To do this, we will:
 
 1. Launch the necessary scripts
 2. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
@@ -202,31 +209,22 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map
 Next, in rviz, we will select 2D Pose Estimate:
 
 
-## Robot
+## The Robot
 
-### Robot Model:
+The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller castor for additional base support.
 
-The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller caster for additional base support. Its a small, affordable, programmable, ROS-based robot for use in education, research, hobby, and product prototyping.
+The robot consists of 4 layers:
 
-It consists of 4 layers:
+* Bottom-most layer: The propulsion group comprising of battery and motors.
+* Second layer: It consists of the power distribution board along with motor drivers.
+* Third layer: This layer has an Raspberry Pi, which is a single board computer, along with an Arduino Mega microcontroller.
+* Top-most layer: It comprises of the LIDAR
 
-1.Lowermost layer: the propulsion group comprising of battery and motors.
-2.Second layer: consists of the power distribution board along with motor drivers.
-3.Third layer: has a single board computer, the RPi alongside the arduino microcontroller.
-4.Uppermost layer: comprises of the LIDAR
+The above mentioned plates are assembled using printed parts, screws and supports to ensure stability of the structure.
 
-The above mentioned plates are linkeed using printed parts, screws and supports to ensure robustness and stability of the structure.
-
-The design of the bot was developed on Fusion360, a 3D modelling CAD software. It was then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by .stl files of the model as well as .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
+The design of the bot is developed on Fusion 360, a 3D modelling CAD software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl files of the model as well as a .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
 
 The robot is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
-
-The model has a sensor called as a LIDAR system which is mounted at the center of the topmost plate of the body.
-
-A LIDAR (Light Detection and Ranging) system is centered around a sensor that sends out pulses of laser light using oscillating mirrors to measure the exact time it takes for these pulses to return as they bounce from the ground as well as the intensity of that reflection. The observed LIDAR data is used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
-
-### Robot Dynamics:
-
 
 ## Project Mentors:
 
@@ -239,5 +237,3 @@ A LIDAR (Light Detection and Ranging) system is centered around a sensor that se
 1. [Joel Jojo Painuthara](https://github.com/JoelJojoP)
 2. [Pooja M](https://github.com/pooja-murugiah)
 3. [Sakshi Bothra](https://github.com/Sakshi-1606)
-
-
