@@ -23,6 +23,8 @@
                 <li><a href="#basic-terminologies-in-ros">Basic Terminologies in ROS</a></li>
                 <li><a href="#turtlebot">Turtlebot</a></li>
                 <li><a href="#lidar">LIDAR</a></li>
+                <li><a href="#Raspberry-pi">Raspberry Pi</a></li>
+                <li><a href="#Arduino-Mega">Arduino Mega</a></li>
             </ul>
         </li>
         <li>
@@ -49,6 +51,9 @@
         </li>
         <li>
             <a href="#project-members">Project Members</a></li>
+        </li> 
+        <li>
+            <a href="#License">License</a></li>
         </li>    
     </ol>
 </details>
@@ -89,7 +94,7 @@ Client libraries needed for this project:
 * rospy: python client library 
 * roscpp: c++ client library
 
-### Turtlebot
+### Turtlebot:
 
 TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
 <p>
@@ -98,9 +103,17 @@ TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use 
     <em>Turtlebot3 Models - Burger and Waffle</em>
 </p>
 
-### LIDAR
+### LIDAR:
 
-A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a sensor that uses pulses of laser light to calculate the relative distances of various objects. A LiDAR system calculates how long it takes for beams of light to hit an object or surface and reflect back to the laser scanner. The distance is then calculated using the velocity of light.  The observed LIDAR data is then used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
+A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a sensor that uses light in the form of a pulsed laser to calculate the relative distances of various objects. This 3D scanning system calculates how long it takes for beams of light to hit an object or surface and reflect back to the laser scanner using the velocity of light. The observed LIDAR data is then used to generate precise, three dimensional information about the environment of the robot and navigate smoothly while avoiding the obstacles.
+
+### Raspberry Pi:
+
+The Raspberry Pi is an affordable single-board computer that operates in the ecosystem, it runs Linux and is extensively used to develop programming skilld or build hardware projects. It is a fast and versatile microprocessing board along with a set of GPIO(general purpose input/output) pins, allowing one to control electronic components for physical computing.
+
+### Arduino Mega:
+
+Arduino is an open-source electronics platform based on easy-to-use hardware and software intended for applications in interactive projects. It is a single-board microcontroller which senses the environment by receiving inputs from sensors and can be used to control the lights, motors and other actuators of the robot. One can even command the Arduino by coding in the Arduino programming language and using the Arduino development environment.
 
 ## Getting Started
 
@@ -220,11 +233,11 @@ The robot consists of 4 layers:
 * Third layer: This layer has an Raspberry Pi, which is a single board computer, along with an Arduino Mega microcontroller.
 * Top-most layer: It comprises of the LIDAR
 
-The above mentioned plates are assembled using printed parts, screws and supports to ensure stability of the structure.
+The above mentioned plates are 3D printed parts which are further assembled with the electronic hardware using screws and supports to ensure stability of the structure.
 
-The design of the bot is developed on Fusion 360, a 3D modelling CAD software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl files of the model as well as a .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
+The design of the bot is created on Fusion 360, a commercial CAD and CAM software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl file of the model alongside a .launch and .yaml file to simulate it on Gazebo. The URDF is an XML file format for specifying the geometry and organization of robots in ROS and can be generated using URDF_Exporter. 
 
-The robot is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
+The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator with the ability to accurately and efficiently generate synthetic sensor data and offers realistic environments with high fidelity sensors streams to construct and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
 
 ## Project Mentors:
 
@@ -237,3 +250,7 @@ The robot is simulated in Gazebo, an open-source 3D robotics simulator that perf
 1. [Joel Jojo Painuthara](https://github.com/JoelJojoP)
 2. [Pooja M](https://github.com/pooja-murugiah)
 3. [Sakshi Bothra](https://github.com/Sakshi-1606)
+
+## License:
+
+This repository is licensed under the 
