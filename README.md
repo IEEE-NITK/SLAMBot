@@ -23,8 +23,8 @@
                 <li><a href="#basic-terminologies-in-ros">Basic Terminologies in ROS</a></li>
                 <li><a href="#turtlebot">Turtlebot</a></li>
                 <li><a href="#lidar">LIDAR</a></li>
-                <li><a href="#Raspberry-pi">Raspberry Pi</a></li>
-                <li><a href="#Arduino-Mega">Arduino Mega</a></li>
+                <li><a href="#raspberry-pi">Raspberry Pi</a></li>
+                <li><a href="#arduino-mega">Arduino Mega</a></li>
             </ul>
         </li>
         <li>
@@ -64,7 +64,7 @@
 
 <b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
 
-![Alt text](assets/slam.png)
+![SLAM](assets/slam.png)
 *Turtlebot using SLAM to navigate across a map*
 
 This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
@@ -109,11 +109,17 @@ A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a se
 
 ### Raspberry Pi:
 
-The Raspberry Pi is an affordable single-board computer that operates in the ecosystem, it runs Linux and is extensively used to develop programming skilld or build hardware projects. It is a fast and versatile microprocessing board along with a set of GPIO(general purpose input/output) pins, allowing one to control electronic components for physical computing.
+The Raspberry Pi is an affordable single-board computer that can run Linux operating system such as Raspbian and Ubuntu. It is extensively used to develop programming skills or build hardware projects. It is a fast and versatile microprocessing board along with a set of GPIO (General Purpose Input/Output) pins, allowing one to control electronic components for physical computing. This project uses a Raspberry Pi 3B.
+
+![Raspi 3B](assets/rpi.png) 
+*Raspberry Pi Model B*
 
 ### Arduino Mega:
 
-Arduino is an open-source electronics platform based on easy-to-use hardware and software intended for applications in interactive projects. It is a single-board microcontroller which senses the environment by receiving inputs from sensors and can be used to control the lights, motors and other actuators of the robot. One can even command the Arduino by coding in the Arduino programming language and using the Arduino development environment.
+Arduino is an open-source electronics platform based on easy-to-use hardware and software intended for applications in interactive projects. Arduino Mega is a microcontroller development board based on the ATmega2560 microcontroller IC. It can be interfaced with various hardware components such as sensors and actuators. Arduino can be programmed using Arduino C which is a language based on C++.
+
+![Arduino](assets/arduino.jpg)
+*Arduino Mega*
 
 ## Getting Started
 
