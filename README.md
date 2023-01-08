@@ -47,6 +47,9 @@
             <a href="#the-robot">The Robot</a> 
         </li>
         <li>
+            <a href="#references">References</a> 
+        </li>
+        <li>
             <a href="#project-mentors">Project Mentors</a></li>
         </li>
         <li>
@@ -62,12 +65,12 @@
 
 ## Introduction
 
-<b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
+<b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating a map of the environment to carry out autonomous activities. 
 
 ![SLAM](assets/slam.png)
 *Turtlebot using SLAM to navigate across a map*
 
-This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
+This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost personal robot kit with open-source software.
 
 ![SlamBot](assets/slambot.png)
 *SLAMBot*
@@ -79,7 +82,7 @@ This project aims to put together a mobile robot similar to a TurtleBot. A Turtl
 
 ### Robot Operating System (ROS)
 
-ROS is an open-source, meta-operating system to operate robots. ROS provides the services of an operating system such as hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. ROS also provides tools and libraries for obtaining, building, writing and running code across multiple computers. ROS currently only runs on Unix-based platforms. Software for ROS is primarily tested on Ubuntu and Mac OS X systems, though the ROS community has been contributing support for Fedora, Gentoo, Arch Linux and other Linux platforms.
+ROS is an open-source, meta-operating system to operate robots. ROS provides the services of an operating system, such as hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. ROS provides tools and libraries for obtaining, building, writing, and running code across multiple computers. ROS currently only runs on Unix-based platforms. Software for ROS is primarily tested on Ubuntu and Mac OS X systems, though the ROS community has been contributing support for Fedora, Gentoo, Arch Linux, and other Linux platforms.
 
 ### Basic Terminologies in ROS:
 
@@ -96,7 +99,7 @@ Client libraries needed for this project:
 
 ### Turtlebot:
 
-TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
+TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation, and Manipulation, making it suitable for home service robots.
 <p>
     <img src="assets/turtlebot3.png" alt="Turtlebot"> 
     <br>
@@ -239,11 +242,11 @@ This will open an RViz window with the map and the robot with the current sensor
 
 In RViz
 
-1. We will select 2D Pose EstimateClick and drag an arrow that estimates where the robot is currently positioned relative to the map that we created.
-2. This should localize the robot and the map and the current sensor feed (the green dots from the LiDAR point cloud) should align:
+1. Select 2D Pose Estimate. Click and drag an arrow that estimates where the robot is currently positioned relative to the map that we created.
+2. This will allign the robot to the map according to the current sensor feed.
 3. Next, select 2D Nav Goal.
-4. Click and drag an arrow that represents the position and heading of where you want the robot to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location.
-5. You'll see the robot compute a local path (a yellow arc), a global path (the blue or red spline), and the robot should start to autonomously drive to the goal position.
+4. Click and drag an arrow that represents the position and orientation of where the robot needs to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location.
+5. The robot will compute a local path (a yellow arc) and a global path (the blue or red spline), and will autonomously drive to the target position.
 
 ## The Robot
 
@@ -261,10 +264,12 @@ The above mentioned plates are 3D printed parts which are further assembled with
 The design of the bot is created on Fusion 360, a commercial CAD and CAM software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl file of the model alongside a .launch and .yaml file to simulate it on Gazebo. The URDF is an XML file format for specifying the geometry and organization of robots in ROS and can be generated using URDF_Exporter. 
 
 The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator with the ability to accurately and efficiently generate synthetic sensor data and offers realistic environments with high fidelity sensors streams to construct and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
-## Refrences 
-1. [ROS wiki](http://wiki.ros.org/ROS/Tutorials)
-2. [turtlebot](https://www.turtlebot.com/about/)
-3. [SLAM and turtlebot](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
+
+## References
+
+1. [ROS Wiki](http://wiki.ros.org/ROS/Tutorials)
+2. [Turtlebot](https://www.turtlebot.com/about/)
+3. [SLAM and Turtlebot](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
 
 ## Project Mentors:
 
