@@ -238,31 +238,12 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to 
 This will open an RViz window with the map and the robot with the current sensor values displayed.
 
 In RViz
-1. Select 2D Pose Estimate and move the robot so that the map is aligned to the current sensor values.
-2. Select 2D Nav Goal and provide the target position and orientation the robot has to move to.
 
-The robot will start moving to the provided target pose.
-
-
-Click and drag an arrow that estimates where the robot is currently positioned relative to the map that we created:
-
-
-This should localize the robot and the map and the current sensor feed (the green dots from the LiDAR point cloud) should align:
-
-
-Next, select 2D Nav Goal:
-
-
-Click and drag an arrow that represents the position and heading of where you want the robot to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location:
-
-
-
-You'll see the robot compute a local path (a yellow arc), a global path (the blue or red spline), and the robot should start to autonomously drive to the goal position:
-
-
-
-
-
+1. We will select 2D Pose EstimateClick and drag an arrow that estimates where the robot is currently positioned relative to the map that we created.
+2. This should localize the robot and the map and the current sensor feed (the green dots from the LiDAR point cloud) should align:
+3. Next, select 2D Nav Goal.
+4. Click and drag an arrow that represents the position and heading of where you want the robot to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location.
+5. You'll see the robot compute a local path (a yellow arc), a global path (the blue or red spline), and the robot should start to autonomously drive to the goal position.
 
 ## The Robot
 
@@ -280,6 +261,10 @@ The above mentioned plates are 3D printed parts which are further assembled with
 The design of the bot is created on Fusion 360, a commercial CAD and CAM software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl file of the model alongside a .launch and .yaml file to simulate it on Gazebo. The URDF is an XML file format for specifying the geometry and organization of robots in ROS and can be generated using URDF_Exporter. 
 
 The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator with the ability to accurately and efficiently generate synthetic sensor data and offers realistic environments with high fidelity sensors streams to construct and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
+## Refrences 
+1. [ROS wiki](http://wiki.ros.org/ROS/Tutorials)
+2. [turtlebot](https://www.turtlebot.com/about/)
+3. [SLAM and turtlebot](s://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
 
 ## Project Mentors:
 
