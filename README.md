@@ -209,6 +209,26 @@ roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map
 Next, in rviz, we will select 2D Pose Estimate:
 
 
+Click and drag an arrow that estimates where the robot is currently positioned relative to the map that we created:
+
+
+This should localize the robot and the map and the current sensor feed (the green dots from the LiDAR point cloud) should align:
+
+
+Next, select 2D Nav Goal:
+
+
+Click and drag an arrow that represents the position and heading of where you want the robot to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location:
+
+
+
+You'll see the robot compute a local path (a yellow arc), a global path (the blue or red spline), and the robot should start to autonomously drive to the goal position:
+
+
+
+
+
+
 ## The Robot
 
 The robot model used in this project is a simple differential drive comprising of 2 wheels mounted on their motor along with a roller castor for additional base support.
