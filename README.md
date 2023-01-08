@@ -264,7 +264,7 @@ The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator 
 ## Refrences 
 1. [ROS wiki](http://wiki.ros.org/ROS/Tutorials)
 2. [turtlebot](https://www.turtlebot.com/about/)
-3. [SLAM and turtlebot](s://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
+3. [SLAM and turtlebot](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
 
 ## Project Mentors:
 
