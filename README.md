@@ -112,6 +112,7 @@ A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a se
 The Raspberry Pi is an affordable single-board computer that can run Linux operating system such as Raspbian and Ubuntu. It is extensively used to develop programming skills or build hardware projects. It is a fast and versatile microprocessing board along with a set of GPIO (General Purpose Input/Output) pins, allowing one to control electronic components for physical computing. This project uses a Raspberry Pi 3B.
 
 ![Raspi 3B](assets/rpi.png) 
+<br>
 *Raspberry Pi Model B*
 
 ### Arduino Mega:
@@ -119,6 +120,7 @@ The Raspberry Pi is an affordable single-board computer that can run Linux opera
 Arduino is an open-source electronics platform based on easy-to-use hardware and software intended for applications in interactive projects. Arduino Mega is a microcontroller development board based on the ATmega2560 microcontroller IC. It can be interfaced with various hardware components such as sensors and actuators. Arduino can be programmed using Arduino C which is a language based on C++.
 
 ![Arduino](assets/arduino.jpg)
+<br>
 *Arduino Mega*
 
 ## Getting Started
