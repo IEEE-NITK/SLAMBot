@@ -23,6 +23,8 @@
                 <li><a href="#basic-terminologies-in-ros">Basic Terminologies in ROS</a></li>
                 <li><a href="#turtlebot">Turtlebot</a></li>
                 <li><a href="#lidar">LIDAR</a></li>
+                <li><a href="#raspberry-pi">Raspberry Pi</a></li>
+                <li><a href="#arduino-mega">Arduino Mega</a></li>
             </ul>
         </li>
         <li>
@@ -49,6 +51,9 @@
         </li>
         <li>
             <a href="#project-members">Project Members</a></li>
+        </li> 
+        <li>
+            <a href="#license">License</a></li>
         </li>    
     </ol>
 </details>
@@ -59,7 +64,7 @@
 
 <b>SLAM</b> (<b>S</b>imultaneous <b>L</b>ocalization <b>A</b>nd <b>M</b>apping) is an essential technology used in robotics that helps robots to estimate their position and orientation on a map while creating the map of the environment to carry out autonomous activities. 
 
-![Alt text](assets/slam.png)
+![SLAM](assets/slam.png)
 *Turtlebot using SLAM to navigate across a map*
 
 This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost, personal robot kit with open source software.
@@ -89,7 +94,7 @@ Client libraries needed for this project:
 * rospy: python client library 
 * roscpp: c++ client library
 
-### Turtlebot
+### Turtlebot:
 
 TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use in education, research, hobby, and product prototyping. The TurtleBot’s core technology is SLAM, Navigation and Manipulation, making it suitable for home service robots.
 <p>
@@ -98,9 +103,25 @@ TurtleBot3 is a small, affordable, programmable, ROS-based mobile robot for use 
     <em>Turtlebot3 Models - Burger and Waffle</em>
 </p>
 
-### LIDAR
+### LIDAR:
 
-A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a sensor that uses pulses of laser light to calculate the relative distances of various objects. A LiDAR system calculates how long it takes for beams of light to hit an object or surface and reflect back to the laser scanner. The distance is then calculated using the velocity of light.  The observed LIDAR data is then used to locate obstacles in the path of the robot and navigate smoothly while avoiding the obstacles.
+A <b>LIDAR</b> (<b>LI</b>ght <b>D</b>etection <b>A</b>nd <b>R</b>anging) is a sensor that uses light in the form of a pulsed laser to calculate the relative distances of various objects. This 3D scanning system calculates how long it takes for beams of light to hit an object or surface and reflect back to the laser scanner using the velocity of light. The observed LIDAR data is then used to generate precise, three dimensional information about the environment of the robot and navigate smoothly while avoiding the obstacles.
+
+### Raspberry Pi:
+
+The Raspberry Pi is an affordable single-board computer that can run Linux operating system such as Raspbian and Ubuntu. It is extensively used to develop programming skills or build hardware projects. It is a fast and versatile microprocessing board along with a set of GPIO (General Purpose Input/Output) pins, allowing one to control electronic components for physical computing. This project uses a Raspberry Pi 3B.
+
+![Raspi 3B](assets/rpi.png) 
+<br>
+*Raspberry Pi Model B*
+
+### Arduino Mega:
+
+Arduino is an open-source electronics platform based on easy-to-use hardware and software intended for applications in interactive projects. Arduino Mega is a microcontroller development board based on the ATmega2560 microcontroller IC. It can be interfaced with various hardware components such as sensors and actuators. Arduino can be programmed using Arduino C which is a language based on C++.
+
+![Arduino](assets/arduino.jpg)
+<br>
+*Arduino Mega*
 
 ## Getting Started
 
@@ -151,12 +172,13 @@ To launch the gazebo simulation use the command
 ```bash
 roslaunch slambot_simulation slambot_simulation.launch
 ```
-or
-```bash
-roslaunch slambot_simulation turtlebot_simulation.launch
-```
 
-To move the robot around, we need to launch teleoperation keyboard:
+![Alt text](assets/slambot_world.png)
+<br>
+*Slambot Simulation World*
+
+To move the robot around, we will use teleop_key which is a package for moving the robot using the keyboard: 
+
 ```bash
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
@@ -165,7 +187,7 @@ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 Before we can autonomously drive around any world, we need to provide the robot with a map which will be used to localize (position) the robot relative to obstacles or features defined in the map. We will create a new map of the default world by doing the following:
 
 1. Launch the world in Gazebo
-2. Launch the mapping node
+2. Launch the mapping script
 3. Drive around and collect data from the robot's sensors until we have a (nearly) complete and accurate map.
 
 After launching the gazebo simulation and teleoperation, use the following command to create a map using gmapping algorithm:
@@ -175,6 +197,8 @@ roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
 ```
 
 Now, with the terminal running the teleop_key selected, drive the robot around using the W, A, D, X and S keys.
+
+https://user-images.githubusercontent.com/97270737/211186864-b15c18e0-27f7-4a30-bb05-f40773bdc2ec.mp4
 
 Once your map has all of the features defined (black for walls or obstacles, white for no obstacles, and gray/transparent for unknown regions), we need to save the map.
 
@@ -192,21 +216,32 @@ This will create two files:
 
 ### SLAM: Autonomous Navigation
 
-Now that we have a map of the world, we can drive the robot autonomously inside the world. To do this, we will:
+Now that the map of the world is prepared, we can drive the robot autonomously inside the world. To do this, we will:
 
-1. Launch the necessary scripts
-2. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
-3. Set target (goal) positions and orientations for the robot to drive to
-4. Have the robot navigate to the goal autonomously
+1. Launch the gazebo simulation
+2. Launch the naviation script
+3. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
+4. Set target (goal) positions and orientations for the robot to drive to
+5. Have the robot navigate to the goal autonomously
 
-Let's launch the following scripts:
+To launch the gazebo simuation, in a terminal run:
+
 ```bash
-roslaunch turtlebot3_gazebo turtlebot3_world.launch
+roslaunch slambot_simulation slambot_simulation.launch
 ```
+
+Then in a new terminal, run
+
 ```bash
-roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to map.yaml file>
 ```
-Next, in rviz, we will select 2D Pose Estimate:
+This will open an RViz window with the map and the robot with the current sensor values displayed.
+
+In RViz
+1. Select 2D Pose Estimate and move the robot so that the map is aligned to the current sensor values.
+2. Select 2D Nav Goal and provide the target position and orientation the robot has to move to.
+
+The robot will start moving to the provided target pose.
 
 
 Click and drag an arrow that estimates where the robot is currently positioned relative to the map that we created:
@@ -240,11 +275,11 @@ The robot consists of 4 layers:
 * Third layer: This layer has an Raspberry Pi, which is a single board computer, along with an Arduino Mega microcontroller.
 * Top-most layer: It comprises of the LIDAR
 
-The above mentioned plates are assembled using printed parts, screws and supports to ensure stability of the structure.
+The above mentioned plates are 3D printed parts which are further assembled with the electronic hardware using screws and supports to ensure stability of the structure.
 
-The design of the bot is developed on Fusion 360, a 3D modelling CAD software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl files of the model as well as a .launch and .yaml files to simulate it on Gazebo. The URDF is an XML file format used in ROS to describe all elements of a robot and can be generated using URDF_Exporter. 
+The design of the bot is created on Fusion 360, a commercial CAD and CAM software. It is then directly exported as a URDF (Unified Robotic Description Format) file, accompanied by a .stl file of the model alongside a .launch and .yaml file to simulate it on Gazebo. The URDF is an XML file format for specifying the geometry and organization of robots in ROS and can be generated using URDF_Exporter. 
 
-The robot is simulated in Gazebo, an open-source 3D robotics simulator that performs physics computations, generates synthetic sensor data and offers convenient interfaces to construct, introspect and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
+The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator with the ability to accurately and efficiently generate synthetic sensor data and offers realistic environments with high fidelity sensors streams to construct and interact with simulations. Within Gazebo, a physics engine is used to define realistic elements of an environment such as illumination, gravity and inertia.
 
 ## Project Mentors:
 
@@ -257,3 +292,7 @@ The robot is simulated in Gazebo, an open-source 3D robotics simulator that perf
 1. [Joel Jojo Painuthara](https://github.com/JoelJojoP)
 2. [Pooja M](https://github.com/pooja-murugiah)
 3. [Sakshi Bothra](https://github.com/Sakshi-1606)
+
+## License:
+
+This repository is licensed under the [BSD-3-Clause License](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
