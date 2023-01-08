@@ -53,7 +53,7 @@
             <a href="#project-members">Project Members</a></li>
         </li> 
         <li>
-            <a href="#License">License</a></li>
+            <a href="#license">License</a></li>
         </li>    
     </ol>
 </details>
@@ -187,7 +187,7 @@ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 Before we can autonomously drive around any world, we need to provide the robot with a map which will be used to localize (position) the robot relative to obstacles or features defined in the map. We will create a new map of the default world by doing the following:
 
 1. Launch the world in Gazebo
-2. Launch the mapping node
+2. Launch the mapping script
 3. Drive around and collect data from the robot's sensors until we have a (nearly) complete and accurate map.
 
 After launching the gazebo simulation and teleoperation, use the following command to create a map using gmapping algorithm:
@@ -216,21 +216,32 @@ This will create two files:
 
 ### SLAM: Autonomous Navigation
 
-Now that we have a map of the world, we can drive the robot autonomously inside the world. To do this, we will:
+Now that the map of the world is prepared, we can drive the robot autonomously inside the world. To do this, we will:
 
-1. Launch the necessary scripts
-2. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
-3. Set target (goal) positions and orientations for the robot to drive to
-4. Have the robot navigate to the goal autonomously
+1. Launch the gazebo simulation
+2. Launch the naviation script
+3. Set an initial pose estimate to align the map relative to the current sensor data (i.e. perform an initial localization)
+4. Set target (goal) positions and orientations for the robot to drive to
+5. Have the robot navigate to the goal autonomously
 
-Let's launch the following scripts:
+To launch the gazebo simuation, in a terminal run:
+
 ```bash
-roslaunch turtlebot3_gazebo turtlebot3_world.launch
+roslaunch slambot_simulation slambot_simulation.launch
 ```
+
+Then in a new terminal, run
+
 ```bash
-roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to map.yaml file>
 ```
-Next, in rviz, we will select 2D Pose Estimate:
+This will open an RViz window with the map and the robot with the current sensor values displayed.
+
+In RViz
+1. Select 2D Pose Estimate and move the robot so that the map is aligned to the current sensor values.
+2. Select 2D Nav Goal and provide the target position and orientation the robot has to move to.
+
+The robot will start moving to the provided target pose.
 
 
 ## The Robot
@@ -264,4 +275,4 @@ The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator 
 
 ## License:
 
-This repository is licensed under the 
+This repository is licensed under the [BSD-3-Clause License](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
