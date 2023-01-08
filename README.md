@@ -198,6 +198,8 @@ roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
 
 Now, with the terminal running the teleop_key selected, drive the robot around using the W, A, D, X and S keys.
 
+https://user-images.githubusercontent.com/97270737/211186864-b15c18e0-27f7-4a30-bb05-f40773bdc2ec.mp4
+
 Once your map has all of the features defined (black for walls or obstacles, white for no obstacles, and gray/transparent for unknown regions), we need to save the map.
 
 ### Saving the Map
