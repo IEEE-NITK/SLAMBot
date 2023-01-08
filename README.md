@@ -172,12 +172,13 @@ To launch the gazebo simulation use the command
 ```bash
 roslaunch slambot_simulation slambot_simulation.launch
 ```
-or
-```bash
-roslaunch slambot_simulation turtlebot_simulation.launch
-```
 
-To move the robot around, we need to launch teleoperation keyboard:
+![Alt text](assets/slambot_world.png)
+<br>
+*Slambot Simulation World*
+
+To move the robot around, we will use teleop_key which is a package for moving the robot using the keyboard: 
+
 ```bash
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
