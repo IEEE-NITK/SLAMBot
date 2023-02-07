@@ -1,9 +1,11 @@
-#include <MPU9255.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <Wire.h>
 #include <ros.h>
 #include <geometry_msgs/Vector3.h>
 
 ros::NodeHandle nh;
-MPU9255 mpu;
+MPU6050 mpu;
 
 geometry_msgs::Vector3 acc, gyro, magn;
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
