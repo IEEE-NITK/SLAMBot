@@ -10,6 +10,6 @@
   <!-- rviz -->
   <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find turtlebot3_slam)/rviz/turtlebot3_gmapping.rviz"/>
+          args="-d $(find slambot_simulation)/rviz/slambot_gmapping.rviz"/>
   </group>
 </launch>
