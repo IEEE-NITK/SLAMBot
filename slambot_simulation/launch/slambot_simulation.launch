@@ -1,11 +1,11 @@
 <launch>
-  <arg name="model" default="burger"/>
-  <arg name="x_pos" default="0.0"/>
-  <arg name="y_pos" default="0.0"/>
+  <arg name="model" default="slambot"/>
+  <arg name="x_pos" default="1.0"/>
+  <arg name="y_pos" default="1.0"/>
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find slambot_simulation)/worlds/house.world"/>
+    <arg name="world_name" value="$(find slambot_simulation)/worlds/world1.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
