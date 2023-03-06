@@ -248,7 +248,7 @@ In RViz
 4. Click and drag an arrow that represents the position and orientation of where the robot needs to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location.
 5. The robot will compute a local path (a yellow arc) and a global path (the blue or red spline), and will autonomously drive to the target position.
 
-
+https://user-images.githubusercontent.com/97270737/223050171-1a2402c0-27b5-4226-9031-b165af7b2f46.mp4
 
 ## The Robot
 
