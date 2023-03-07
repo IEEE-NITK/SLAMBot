@@ -176,14 +176,14 @@ To launch the gazebo simulation use the command
 roslaunch slambot_simulation slambot_simulation.launch
 ```
 
-![Alt text](assets/slambot_world.png)
+![Alt text](assets/slambot_world1.jpg)
 <br>
 *Slambot Simulation World*
 
-To move the robot around, we will use teleop_key which is a package for moving the robot using the keyboard: 
+To move the robot around, we will use teleop_twist_keyboard which is a package for moving the robot using the keyboard: 
 
 ```bash
-roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py 
 ```
 ### SLAM: Creating a Map
 
@@ -196,10 +196,10 @@ Before we can autonomously drive around any world, we need to provide the robot 
 After launching the gazebo simulation and teleoperation, use the following command to create a map using gmapping algorithm:
 
 ```bash
-roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+roslaunch slambot_simulation slambot_slam.launch
 ```
 
-Now, with the terminal running the teleop_key selected, drive the robot around using the W, A, D, X and S keys.
+Now, with the terminal running the teleop_twist_keyboard selected, drive the robot around using the ```I```, ```J```, ```L```, ```,``` and ```K``` keys.
 
 https://user-images.githubusercontent.com/97270737/211186864-b15c18e0-27f7-4a30-bb05-f40773bdc2ec.mp4
 
@@ -236,7 +236,7 @@ roslaunch slambot_simulation slambot_simulation.launch
 Then in a new terminal, run
 
 ```bash
-roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to map.yaml file>
+roslaunch slambot_simulation slambot_navigation.launch 
 ```
 This will open an RViz window with the map and the robot with the current sensor values displayed.
 
@@ -247,6 +247,8 @@ In RViz
 3. Next, select 2D Nav Goal.
 4. Click and drag an arrow that represents the position and orientation of where the robot needs to drive to. In order for a path to be calculated, this arrow must be inside a white or gray region, signifying that there is no known obstacle at the goal location.
 5. The robot will compute a local path (a yellow arc) and a global path (the blue or red spline), and will autonomously drive to the target position.
+
+https://user-images.githubusercontent.com/97270737/223050171-1a2402c0-27b5-4226-9031-b165af7b2f46.mp4
 
 ## The Robot
 
