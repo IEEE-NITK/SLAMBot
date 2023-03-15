@@ -19,6 +19,7 @@ ros::Publisher mpu_acc("imu/accelerometer", &acc);
 const int MPU = 0x68; // MPU6050 I2C address
 
 float g = 9.81;//value of gravitation acceleration
+float pi = 3.14159;//value of Pi
 
 // define pins
 //encoder
@@ -28,19 +29,16 @@ int ENC2A  = 18;
 int ENC2B = 19; // Encoder pins for left motor
 
 //L298N Motor Driver
-int ENA = 5 ; //motor driver PWM pins
-int ENB = 10; //motor driver PWM pins
+int ENA = 5 ; //motor driver PWM pins for Left motor
+int ENB = 10; //motor driver PWM pins for Right motor
 int INT1 = 6; //direction control for left motor
 int INT2 = 7; //direction control for left motor
 int INT3 = 8; //direction control for right motor
 int INT4 = 9; //direction control for right motor
 
-//MPU6050
- 
-
 //Acceleration and Rotation rate values
 float ax, ay, az; 
-float gyrox, gyroy, gyroz;  
+float gx, gy, gz;  
 
 //Enoder count values
 int pulses_left = 0;
@@ -111,7 +109,6 @@ void velocity_callback(const geometry_msgs::Twist& vel_msg)
 }
 
 
-
 //Calculate transform for base_footprint
 void calculate_transform()
 {
@@ -168,19 +165,20 @@ void calculate_joint_states()
 //Calculate acceleration from IMU values
 void calculate_imu()
 {
+  mpu.getAcceleration(&ax, &ay, &az);
+  mpu.getRotation(&gx, &gy, &gz);
   //mpu.read_acc();//get data from the accelerometer
   //mpu.read_gyro();//get data from the gyroscope
 
   //converts gyrovalues to radian per sec
-
-  acc.x = ((float)mpu.ax*g)/16384;
-  acc.y = ((float)mpu.ay*g)/16384;
-  acc.z = ((float)mpu.az*g)/16384;
+  acc.x = ((float)ax*g)/16384;
+  acc.y = ((float)ay*g)/16384;
+  acc.z = ((float)az*g)/16384;
 
   //configuration of gyro values to rad/sec required
-  gyro.x = mpu.gx;
-  gyro.y = mpu.gy;
-  gyro.z = mpu.gz;
+  gyro.x = ((float)gx*pi)/180;
+  gyro.y = ((float)gy*pi)/180;
+  gyro.z = ((float)gz*pi)/180;
 
   mpu_acc.publish(&acc);
   mpu_gyro.publish(&gyro);
@@ -202,9 +200,10 @@ void setup()
 
   pinMode(ENA, OUTPUT);   //please change these
   pinMode(ENB, OUTPUT);  //please change these
-  
+
+  //Initial Setup for MPU6050 I2C in Arduino C
   /*
-  //Initial Setup for MPU6050 I2C
+  //Initial Setup for MPU6050 I2C in AVRC
   Wire.begin();                      // Initialize comunication
   Wire.beginTransmission(MPU);       // Start communication with MPU6050 // MPU=0x68
   Wire.write(0x6B);                  // Talk to the register 6B
@@ -261,5 +260,5 @@ void loop()
   delay(1000);
   
   node.spinOnce();
-  delay(100);
+  delay(1000);
 }
