@@ -62,7 +62,7 @@ double x=0;                                   // position in x direction
 double theta = 0;                             //yaw angle in radians
 
 //Robot Values
-float wheel_base =  ;//please enter wheel dist. value
+float wheel_base = 0.193 ;//please enter wheel dist. value
 float radius = 0.065 ; // Radius of wheel = 65mm
 float encoderppr = 400;
 
