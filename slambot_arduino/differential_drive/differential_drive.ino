@@ -8,12 +8,14 @@
 #include <tf2_msgs/TFMessage.h>
 
 //Declare global variables
-ros::NodeHandle node;                   //initialise ros node nh
+ros::NodeHandle node;                   //initialise ros node 
+geometry_msgs::TransformStamped t;
+
 nav_msgs::Odometry odometry;
 sensor_msgs::Imu imu;
 sensor_msgs::JointState joint_states;
 tf2_msgs::TFMessage transform;
-geometry_msgs::Twist cmd_vel;
+geometry_msgs::Twist cmd_vel;         
 geometry_msgs::Vector3 acc, gyro;
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
 
@@ -42,7 +44,7 @@ int INT_4 = 9; //direction control for right motor
 float ax, ay, az; 
 float gx, gy, gz;  
 
-//Enoder count values
+//Enoder count valuesgit
 int pulses_left = 0;
 int pulses_right = 0;
 
@@ -64,10 +66,19 @@ double x=0;                                   // position in x direction
 double theta = 0;                             //yaw angle in radians
 
 //Robot Values
-float wheel_base = 0.193193;//please enter wheel dist. value
+float wheel_base = 0.193;//please enter wheel dist. value
 float radius = 0.065 ; // Radius of wheel = 65mm
 float encoderppr = 400;
 
+//Callback functions
+float linear_x;
+float linear_y;
+float linear;
+float angle;
+
+//Motor Velocities
+float vel_right;
+float vel_left;
 
 
 //Left motor encoder counter
@@ -95,19 +106,19 @@ void encoderRightMotor() {
 }
 
 //Calculate motor velocities inside this
-void velocity_callback(const geometry_msgs::Twist& vel_msg)
+void velocity_callback(const geometry_msgs::Twist &vel_msg)
 {
   // based on twist.subscriber
-  float linear_x = cmd_vel.linear.x;
-  float linear_y = cmd_vel.linear.y;
-  float angle = cmd_vel.angular.z;
+  linear_x = cmd_vel.linear.x;
+  linear_y = cmd_vel.linear.y;
+  angle = cmd_vel.angular.z;
 
-  /*float vel_right = (angle * wheel_base) / 2 + linear;
-  float vel_left = linear * 2 - vel_right;*/
+  linear =sqrt(sq(linear_x) + sq(linear_y)); 
+
+  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
+  vel_left = linear * 2 - vel_right;               //left motor velocity
   
-  vel_msg.linear.x = linear_x;
-  vel_msg.linear.y = linear_y;
-  vel_msg.angular.z = angle;
+ 
 }
 
 
@@ -115,9 +126,8 @@ void velocity_callback(const geometry_msgs::Twist& vel_msg)
 void calculate_transform()
 {
     theta += ((pos_left_diff-pos_right_diff)/wheel_base);
-
     //please complete the function
-    transform.Quaternion.z = theta;
+    t.transform.rotation.z = theta;
 }
 
 //Calculate odometry from encoder values
@@ -150,14 +160,14 @@ void calculate_odometry()
 }
 
 //Calculate joint states from encoder values
-void calculate_joint_states()
+sensor_msgs::JointState calculate_joint_states()
 {
-  theta += ((pos_left_diff-pos_right_diff)/wheel_base);
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
-  joint_states.name = revolute;
-  joint_states.postion = theta;
-  joint_states.velocity= cmd_vel.velocity.x;
+  joint_states.name = 'revolute';
+  *joint_states.position = theta;
+  *joint_states.velocity = (vel_right + vel_left)/2;  
   //joint_states.effort=;
+  return joint_states;
   
 }
 
@@ -179,8 +189,8 @@ void calculate_imu()
   gyro.y = ((float)gy*pi)/180;
   gyro.z = ((float)gz*pi)/180;
 
-  mpu.publish(&acc);
-  mpu.publish(&gyro);
+  imu.publish(&acc);
+  imu.publish(&gyro);
 }
 
 //Initialise nodes, publishers, subscribers and serial monitor
@@ -249,6 +259,7 @@ void loop()
 
   digitalWrite(INT_1, HIGH);
   digitalWrite(INT_2, LOW);
+  
   delay(1000);
 
   digitalWrite(INT_3, LOW);
