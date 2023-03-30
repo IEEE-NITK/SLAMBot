@@ -8,6 +8,7 @@
 #include <tf2_msgs/TFMessage.h>
 
 //Declare global variables
+ros::NodeHandle node;                   //initialise ros node nh
 nav_msgs::Odometry odometry;
 sensor_msgs::Imu imu;
 sensor_msgs::JointState joint_states;
@@ -16,6 +17,7 @@ geometry_msgs::Twist cmd_vel;
 geometry_msgs::Vector3 acc, gyro;
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
 
+MPU6050 mpu;
 const int MPU = 0x68; // MPU6050 I2C address
 
 float g = 9.81;//value of gravitation acceleration
@@ -31,10 +33,10 @@ int ENC2B = 19; // Encoder pins for left motor
 //L298N Motor Driver
 int ENA = 5 ; //motor driver PWM pins for Left motor
 int ENB = 10; //motor driver PWM pins for Right motor
-int INT1 = 6; //direction control for left motor
-int INT2 = 7; //direction control for left motor
-int INT3 = 8; //direction control for right motor
-int INT4 = 9; //direction control for right motor
+int INT_1 = 6; //direction control for left motor
+int INT_2 = 7; //direction control for left motor
+int INT_3 = 8; //direction control for right motor
+int INT_4 = 9; //direction control for right motor
 
 //Acceleration and Rotation rate values
 float ax, ay, az; 
@@ -62,7 +64,7 @@ double x=0;                                   // position in x direction
 double theta = 0;                             //yaw angle in radians
 
 //Robot Values
-float wheel_base =  ;//please enter wheel dist. value
+float wheel_base = 193;//please enter wheel dist. value
 float radius = 0.065 ; // Radius of wheel = 65mm
 float encoderppr = 400;
 
@@ -112,9 +114,7 @@ void velocity_callback(const geometry_msgs::Twist& vel_msg)
 //Calculate transform for base_footprint
 void calculate_transform()
 {
-    if (speed_handle_left == speed_handle_right);
-    else
-    theta += ((pos_left_diff-pos_right_diff)/wheeltrack);
+    theta += ((pos_left_diff-pos_right_diff)/wheel_base);
 
     //please complete the function
     transform.Quaternion.z = theta;
@@ -134,9 +134,7 @@ void calculate_odometry()
     pos_average_diff = (pos_left_diff + pos_right_diff)/2;
     pos_total += pos_average_diff;
 
-    if (speed_handle_left == speed_handle_right);
-    else
-    theta += ((pos_left_diff-pos_right_diff)/wheeltrack);    
+    theta += ((pos_left_diff-pos_right_diff)/wheel_base);    
 
     if (theta > PI)
     theta -= TWO_PI;
@@ -154,6 +152,7 @@ void calculate_odometry()
 //Calculate joint states from encoder values
 void calculate_joint_states()
 {
+  theta += ((pos_left_diff-pos_right_diff)/wheel_base);
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
   joint_states.name = revolute;
   joint_states.postion = theta;
@@ -180,8 +179,8 @@ void calculate_imu()
   gyro.y = ((float)gy*pi)/180;
   gyro.z = ((float)gz*pi)/180;
 
-  mpu_acc.publish(&acc);
-  mpu_gyro.publish(&gyro);
+  mpu.publish(&acc);
+  mpu.publish(&gyro);
 }
 
 //Initialise nodes, publishers, subscribers and serial monitor
@@ -195,8 +194,8 @@ void setup()
   pinMode(ENC1B,INPUT);
   pinMode(ENC2A,INPUT);
   pinMode(ENC2B,INPUT);
-  attachInterrupt(digitalPinToInterrupt(ENC1A),motor1_encoder,RISING);
-  attachInterrupt(digitalPinToInterrupt(ENC2A),motor2_encoder,RISING);
+  attachInterrupt(digitalPinToInterrupt(ENC1A),encoderLeftMotor,RISING);
+  attachInterrupt(digitalPinToInterrupt(ENC2A),encoderRightMotor,RISING);
 
   pinMode(ENA, OUTPUT);   //please change these
   pinMode(ENB, OUTPUT);  //please change these
@@ -245,18 +244,18 @@ void loop()
   analogWrite(ENB, 50); //ENB pin
 
   //Controlling spin direction of motors:
-  digitalWrite(INT3, HIGH);
-  digitalWrite(INT4, LOW);
+  digitalWrite(INT_3, HIGH);
+  digitalWrite(INT_4, LOW);
 
-  digitalWrite(INT1, HIGH);
-  digitalWrite(INT2, LOW);
+  digitalWrite(INT_1, HIGH);
+  digitalWrite(INT_2, LOW);
   delay(1000);
 
-  digitalWrite(INT3, LOW);
-  digitalWrite(INT4, HIGH);
+  digitalWrite(INT_3, LOW);
+  digitalWrite(INT_4, HIGH);
 
-  digitalWrite(INT1, LOW);
-  digitalWrite(INT2, HIGH);
+  digitalWrite(INT_1, LOW);
+  digitalWrite(INT_2, HIGH);
   delay(1000);
   
   node.spinOnce();
