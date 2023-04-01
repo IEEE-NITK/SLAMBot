@@ -7,6 +7,7 @@
 #include <sensor_msgs/JointState.h>
 #include <tf2_msgs/TFMessage.h>
 
+#define looptime 100
 
 //Declare global variables
 ros::NodeHandle node;                   //initialise ros node 
@@ -17,8 +18,10 @@ sensor_msgs::JointState joint_states;
 tf2_msgs::TFMessage transform;
 geometry_msgs::Twist cmd_vel;         
 geometry_msgs::Vector3 acc, gyro;
+
+//Delaring Publishers
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
-ros::Publisher mpu_gyro("/imu/data", &imu_msg);
+ros::Publisher mpu_gyro("/imu/data", &gyro);
 
 
 MPU6050 mpu;
@@ -125,15 +128,17 @@ void velocity_callback(const geometry_msgs::Twist &vel_msg)
   vel_left = linear * 2 - vel_right;               //left motor velocity
   
   //CONTINUE
+  
+
 }
 
 
 //Calculate transform for base_footprint
 void calculate_transform()
 {
-    theta += ((pos_left_diff-pos_right_diff)/wheel_base);
-    //please complete the function
-    t.transform.rotation.z = theta;
+  //theta += ((pos_left_diff-pos_right_diff)/wheel_base);
+  //please complete the function
+  t.transform.rotation.z = theta;
 }
 
 //Calculate odometry from encoder values
@@ -186,9 +191,8 @@ sensor_msgs::Imu calculate_imu()
   mpu.getAcceleration(&ax, &ay, &az);
   mpu.getRotation(&gx, &gy, &gz);
   //mpu.read_acc();//get data from the accelerometer
-  //mpu.read_gyro();//get data from the gyroscope\
+  //pu.read_gyro();//get data from the gyroscope\
   */
-
 
   //converts accel values to m per sec^2
   acc.x = ((float)ax*g)/16384;
@@ -200,11 +204,8 @@ sensor_msgs::Imu calculate_imu()
   gyro.y = ((float)gy*pi)/180;
   gyro.z = ((float)gz*pi)/180;
 
-  imu_msg.publish(&acc);
-  imu_msg.publish(&gyro);
-
-  gyro.publish(imu_msg);
-  return imu_msg;
+  mpu_acc.publish(&acc);
+  mpu_gyro.publish(&gyro);
 }
 
 //Initialise nodes, publishers, subscribers and serial monitor
