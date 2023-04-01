@@ -7,20 +7,22 @@
 #include <sensor_msgs/JointState.h>
 #include <tf2_msgs/TFMessage.h>
 
+
 //Declare global variables
 ros::NodeHandle node;                   //initialise ros node 
 geometry_msgs::TransformStamped t;
-
 nav_msgs::Odometry odometry;
-sensor_msgs::Imu imu;
+sensor_msgs::Imu imu_msg;
 sensor_msgs::JointState joint_states;
 tf2_msgs::TFMessage transform;
 geometry_msgs::Twist cmd_vel;         
 geometry_msgs::Vector3 acc, gyro;
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
+ros::Publisher mpu_gyro("/imu/data", &imu_msg);
+
 
 MPU6050 mpu;
-const int MPU = 0x68; // MPU6050 I2C address
+//const int MPU = 0x68; // MPU6050 I2C address
 
 float g = 9.81;//value of gravitation acceleration
 float pi = 3.14159;//value of Pi
@@ -41,10 +43,14 @@ int INT_3 = 8; //direction control for right motor
 int INT_4 = 9; //direction control for right motor
 
 //Acceleration and Rotation rate values
-float ax, ay, az; 
-float gx, gy, gz;  
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
 
-//Enoder count valuesgit
+//Timer for mpu values
+float timeStep = 0.01;
+unsigned long timer = 0;
+
+//Encoder count values
 int pulses_left = 0;
 int pulses_right = 0;
 
@@ -118,7 +124,7 @@ void velocity_callback(const geometry_msgs::Twist &vel_msg)
   vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
   vel_left = linear * 2 - vel_right;               //left motor velocity
   
- 
+  //CONTINUE
 }
 
 
@@ -164,33 +170,41 @@ sensor_msgs::JointState calculate_joint_states()
 {
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
   joint_states.name = 'revolute';
-  *joint_states.position = theta;
-  *joint_states.velocity = (vel_right + vel_left)/2;  
+  *joint_states.position = theta; //CORRRECTION
+  *joint_states.velocity = (vel_right + vel_left)/2;  //CORRECTION
   //joint_states.effort=;
   return joint_states;
   
 }
 
 //Calculate acceleration from IMU values
-void calculate_imu()
+sensor_msgs::Imu calculate_imu()
 {
+  mpu.CalibrateGyro();
+  mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  /*
   mpu.getAcceleration(&ax, &ay, &az);
   mpu.getRotation(&gx, &gy, &gz);
   //mpu.read_acc();//get data from the accelerometer
-  //mpu.read_gyro();//get data from the gyroscope
+  //mpu.read_gyro();//get data from the gyroscope\
+  */
 
-  //converts gyrovalues to radian per sec
+
+  //converts accel values to m per sec^2
   acc.x = ((float)ax*g)/16384;
   acc.y = ((float)ay*g)/16384;
   acc.z = ((float)az*g)/16384;
 
-  //configuration of gyro values to rad/sec required
+  //convert of gyro values to rad/sec^2 
   gyro.x = ((float)gx*pi)/180;
   gyro.y = ((float)gy*pi)/180;
   gyro.z = ((float)gz*pi)/180;
 
-  imu.publish(&acc);
-  imu.publish(&gyro);
+  imu_msg.publish(&acc);
+  imu_msg.publish(&gyro);
+
+  gyro.publish(imu_msg);
+  return imu_msg;
 }
 
 //Initialise nodes, publishers, subscribers and serial monitor
@@ -243,6 +257,7 @@ void setup()
   node.advertise(transform_publisher);
   node.advertise(joint_state_publisher);
   node.subscribe(twist_subscriber);
+  
 }
 
 //Write your program logic
