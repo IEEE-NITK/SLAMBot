@@ -9,28 +9,6 @@
 
 #define looptime 100
 
-//Declare global variables
-ros::NodeHandle node;                   //initialise ros node 
-geometry_msgs::TransformStamped t;
-nav_msgs::Odometry odometry;
-sensor_msgs::Imu imu_msg;
-sensor_msgs::JointState joint_states;
-tf2_msgs::TFMessage transform;
-geometry_msgs::Twist cmd_vel;         
-geometry_msgs::Vector3 acc, gyro;
-
-//Delaring Publishers
-ros::Publisher mpu_acc("imu/accelerometer", &acc);
-ros::Publisher mpu_gyro("/imu/data", &gyro);
-ros::Publisher Joint_States("/sensor_msgs/JointState", &joint_states);
-ros::Publisher odom("/nav_msgs/Odometry", &odometry);
-
-//Declaring Subsribers
-//ros::Subscriber vel_msg = node.subscribe("geometry_msgs/Twist",1000,velocity_callback);
-
-
-MPU6050 mpu;
-
 //constants
 float g = 9.81;//value of gravitation acceleration
 float pi = 3.14159;//value of Pi
@@ -99,6 +77,40 @@ float angle;
 float vel_right;
 float vel_left;
 
+void velocity_callback(const geometry_msgs::Twist &vel_msg)
+{
+  // based on twist.subscriber
+  linear_x = vel_msg.linear.x;
+  linear_y = vel_msg.linear.y;
+  angle = vel_msg.angular.z;
+
+  linear =sqrt(sq(linear_x) + sq(linear_y)); 
+
+  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
+  vel_left = linear * 2 - vel_right;               //left motor velocity
+}
+
+//Declare global variables
+ros::NodeHandle node;                   //initialise ros node 
+geometry_msgs::TransformStamped t;
+nav_msgs::Odometry odometry;
+sensor_msgs::Imu imu_msg;
+sensor_msgs::JointState joint_states;
+tf2_msgs::TFMessage transform;
+geometry_msgs::Twist cmd_vel;         
+geometry_msgs::Vector3 acc, gyro;
+
+//Delaring Publishers
+ros::Publisher mpu_acc("imu/accelerometer", &acc);
+ros::Publisher mpu_gyro("/imu/data", &gyro);
+ros::Publisher Joint_States("/joint_state", &joint_states);
+ros::Publisher odom("/odom", &odometry);
+
+//Declaring Subsribers
+ros::Subscriber<geometry_msgs::Twist> vel_msg("/cmd_vel", velocity_callback);
+
+
+MPU6050 mpu;
 
 //Left motor encoder counter
 void encoderLeftMotor() {
@@ -122,20 +134,6 @@ void encoderRightMotor() {
     pos_right++;
     pulses_right++;
   }
-}
-
-//Calculate motor velocities inside this
-void velocity_callback(const geometry_msgs::Twist &vel_msg)
-{
-  // based on twist.subscriber
-  linear_x = cmd_vel.linear.x;
-  linear_y = cmd_vel.linear.y;
-  angle = cmd_vel.angular.z;
-
-  linear =sqrt(sq(linear_x) + sq(linear_y)); 
-
-  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
-  vel_left = linear * 2 - vel_right;               //left motor velocity
 }
 
 //move left motor
@@ -256,7 +254,6 @@ sensor_msgs::JointState calculate_joint_states()
 //Calculate acceleration from IMU values
 sensor_msgs::Imu calculate_imu()
 {
-  mpu.CalibrateGyro();
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   /*
   mpu.getAcceleration(&ax, &ay, &az);
@@ -284,6 +281,10 @@ void setup()
 {
   Serial.begin(9600);                           //modified baudrate
   Serial.println("Starting...");
+
+  //Initializing IMU
+  mpu.initialize();
+  mpu.CalibrateGyro(6);
   
   //Initial Setup for Encoder
   pinMode(ENC1A,INPUT);
@@ -324,14 +325,11 @@ void setup()
 
   //ROS Publishers and subscribers
   node.initNode();
-  //node.subscribe(twist_subscriber);
-  /*
-  node.advertise(odometry_publisher);
-  node.advertise(imu_publisher);
-  node.advertise(transform_publisher);
-  node.advertise(joint_state_publisher);
-  node.subscribe(twist_subscriber);
-  */
+  node.subscribe(vel_msg);
+  node.advertise(odom);
+  node.advertise(mpu_gyro);
+  node.advertise(mpu_acc);
+  node.advertise(Joint_States);
 }
 
 //Write your program logic
@@ -354,7 +352,6 @@ void loop()
   calculate_imu();
   calculate_transform();
   calculate_odometry();
-  velocity_callback(cmd_vel);   //possible source of error
   left_traverse(vel_left);
   right_traverse(vel_right);
 
@@ -369,8 +366,6 @@ void loop()
   digitalWrite(INT_1, LOW);
   digitalWrite(INT_2, HIGH);
   delay(1000);
-  
-  node.spinOnce();
-  delay(1000);
   */
+  node.spinOnce();
 }
