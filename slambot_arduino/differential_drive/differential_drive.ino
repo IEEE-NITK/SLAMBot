@@ -43,12 +43,12 @@ int ENC2A  = 18;
 int ENC2B = 19; // Encoder pins for left motor
 
 //L298N Motor Driver
-int ENA = 5 ; //motor driver PWM pins for Left motor
-int ENB = 10; //motor driver PWM pins for Right motor
-int INT_1 = 6; //direction control for left motor
-int INT_2 = 7; //direction control for left motor
-int INT_3 = 8; //direction control for right motor
-int INT_4 = 9; //direction control for right motor
+int ENA = 5 ; //motor driver PWM pins for RIGHT motor
+int ENB = 10; //motor driver PWM pins for LEFT motor
+int INT_1 = 6; //direction control for RIGHT motor
+int INT_2 = 7; //direction control for RIGHT motor
+int INT_3 = 8; //direction control for LEFT motor
+int INT_4 = 9; //direction control for LEFT motor
 
 //Acceleration and Rotation rate values
 int16_t ax, ay, az;
@@ -146,20 +146,20 @@ void left_traverse(float vel_left)
 
   if(encoder_count < 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENB, 50); 
     digitalWrite(INT_3, HIGH);
     digitalWrite(INT_4, LOW);
 
   }
     else if(encoder_count > 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENB, 50); 
     digitalWrite(INT_3, LOW);
     digitalWrite(INT_4, HIGH);
   }
   else if(encoder_count == 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENB, 50); 
     digitalWrite(INT_3, LOW);
     digitalWrite(INT_4, LOW);
   }
@@ -174,20 +174,20 @@ void right_traverse(float vel_right)
 
   if(encoder_count < 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENA, 50); 
     digitalWrite(INT_1, HIGH);
     digitalWrite(INT_2, LOW);
 
   }
     else if(encoder_count > 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENA, 50); 
     digitalWrite(INT_1, LOW);
     digitalWrite(INT_2, HIGH);
   }
   else if(encoder_count == 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENA, 50); 
     digitalWrite(INT_1, LOW);
     digitalWrite(INT_2, LOW);
   }
@@ -339,16 +339,18 @@ void loop()
 {
   //Controlling speed (0 = off and 255 = max speed):
   /*Caution: The motors are 300 rpm please don't use PWM values greater than 75*/
+  /*
   analogWrite(ENA, 50); //ENA pin
   analogWrite(ENB, 50); //ENB pin
 
   //Controlling spin direction of motors:
-  digitalWrite(INT_3, HIGH);
-  digitalWrite(INT_4, LOW);
+  digitalWrite(INT_4, HIGH);
+  digitalWrite(INT_3, LOW);
 
-  digitalWrite(INT_1, HIGH);
-  digitalWrite(INT_2, LOW);
-  
+  digitalWrite(INT_2, HIGH);
+  digitalWrite(INT_1, LOW);
+  */
+ 
   calculate_imu();
   calculate_transform();
   calculate_odometry();

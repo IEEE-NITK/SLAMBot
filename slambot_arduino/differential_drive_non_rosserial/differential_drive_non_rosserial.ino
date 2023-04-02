@@ -266,28 +266,22 @@ void loop()
 {
   //Controlling speed (0 = off and 255 = max speed):
   /*Caution: The motors are 300 rpm please don't use PWM values greater than 75*/
-  analogWrite(ENA, 50); //ENA pin
-  analogWrite(ENB, 50); //ENB pin
+  analogWrite(ENA, 0); //ENA pin //RIGHT
+  analogWrite(ENB, 0); //ENB pin
 
   //Controlling spin direction of motors:
-  digitalWrite(INT_4, HIGH);
-  digitalWrite(INT_3, LOW);
+  //digitalWrite(INT_4, HIGH);
+  //digitalWrite(INT_3, LOW);
 
   digitalWrite(INT_2, HIGH);
   digitalWrite(INT_1, LOW);
+  
 
   Serial.println("Encoder Count");
   Serial.println(pulses_right);
   Serial.println(pulses_left);
   Serial.println(".........................");
-  delay(1000);
 
-  digitalWrite(INT_3, LOW);
-  digitalWrite(INT_4, LOW);
-
-  digitalWrite(INT_1, LOW);
-  digitalWrite(INT_2, LOW);
-  delay(1000);
   
   /*
   Serial.println("Encoder Count");
@@ -297,5 +291,5 @@ void loop()
   */
   node.spinOnce();
 
-  delay(2000);
+  //delay(2000);
 }

@@ -25,7 +25,8 @@ void loop() {
   Serial.println(count_pulses_enc1);
   Serial.println(count_pulses_enc2);
   Serial.println(".........................");
-
+  delay(2000);
+  
 }
 void motor1_encoder(){
   int b=digitalRead(ENC1B);

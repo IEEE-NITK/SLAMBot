@@ -1,5 +1,6 @@
-#define ENC1A 2
-#define ENC1B 3
+#define ENC1A 18
+#define ENC1B 19
+
 
 int count_pulses=0;
 void setup() {
