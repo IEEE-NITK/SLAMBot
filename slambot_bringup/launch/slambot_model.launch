@@ -1,0 +1,16 @@
+<launch>
+  <arg name="model" default="slambot" />
+  <arg name="multi_robot_name" default=""/>
+
+  <include file="$(find slambot_bringup)/launch/slambot_remote.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+  </include>
+
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="use_gui" value="true"/>
+    <param name="rate" value="50"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find slambot_description)/rviz/urdf.rviz"/>
+</launch>
