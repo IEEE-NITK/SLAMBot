@@ -9,7 +9,7 @@
 
 //initializing all the variables
 //timers for sub-main loop
-#define LOOPTIME           100                //Looptime in millisecond
+#define LOOPTIME 100                //Looptime in millisecond
 const byte noCommLoopMax = 10;                //number of main loops the robot will execute without communication before stopping
 unsigned int noCommLoops = 0;                 //main loop without communication counter
 unsigned long lastMilli = 0;

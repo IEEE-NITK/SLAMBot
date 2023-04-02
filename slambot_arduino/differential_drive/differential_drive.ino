@@ -22,11 +22,16 @@ geometry_msgs::Vector3 acc, gyro;
 //Delaring Publishers
 ros::Publisher mpu_acc("imu/accelerometer", &acc);
 ros::Publisher mpu_gyro("/imu/data", &gyro);
+ros::Publisher Joint_States("/sensor_msgs/JointState", &joint_states);
+ros::Publisher odom("/nav_msgs/Odometry", &odometry);
+
+//Declaring Subsribers
+//ros::Subscriber vel_msg = node.subscribe("geometry_msgs/Twist",1000,velocity_callback);
 
 
 MPU6050 mpu;
-//const int MPU = 0x68; // MPU6050 I2C address
 
+//constants
 float g = 9.81;//value of gravitation acceleration
 float pi = 3.14159;//value of Pi
 
@@ -68,6 +73,11 @@ double pos_left_diff = 0;
 double pos_right_diff = 0;
 double pos_average_diff = 0;
 double pos_total = 0;
+
+//Variables for Desired Traversal
+double pos_left_desired = 0;
+double pos_right_desired = 0;
+
 
 // tf variables to broadcast
 double y=0;                                   // position in y direction
@@ -126,12 +136,63 @@ void velocity_callback(const geometry_msgs::Twist &vel_msg)
 
   vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
   vel_left = linear * 2 - vel_right;               //left motor velocity
-  
-  //CONTINUE
-  
+}
+
+//move left motor
+void left_traverse(float vel_left)
+{
+  int encoder_count;
+  encoder_count = (vel_left * looptime * encoderppr)/(2 * PI * radius);
+
+  if(encoder_count < 0)
+  {
+    analogWrite(ENA, 50); 
+    digitalWrite(INT_3, HIGH);
+    digitalWrite(INT_4, LOW);
+
+  }
+    else if(encoder_count > 0)
+  {
+    analogWrite(ENA, 50); 
+    digitalWrite(INT_3, LOW);
+    digitalWrite(INT_4, HIGH);
+  }
+  else if(encoder_count == 0)
+  {
+    analogWrite(ENA, 50); 
+    digitalWrite(INT_3, LOW);
+    digitalWrite(INT_4, LOW);
+  }
 
 }
 
+//move right motor
+void right_traverse(float vel_right)
+{
+  int encoder_count;
+  encoder_count = (vel_right * looptime * encoderppr)/(2 * PI * radius);
+
+  if(encoder_count < 0)
+  {
+    analogWrite(ENB, 50); 
+    digitalWrite(INT_1, HIGH);
+    digitalWrite(INT_2, LOW);
+
+  }
+    else if(encoder_count > 0)
+  {
+    analogWrite(ENB, 50); 
+    digitalWrite(INT_1, LOW);
+    digitalWrite(INT_2, HIGH);
+  }
+  else if(encoder_count == 0)
+  {
+    analogWrite(ENB, 50); 
+    digitalWrite(INT_1, LOW);
+    digitalWrite(INT_2, LOW);
+  }
+
+}
 
 //Calculate transform for base_footprint
 void calculate_transform()
@@ -141,7 +202,7 @@ void calculate_transform()
   t.transform.rotation.z = theta;
 }
 
-//Calculate odometry from encoder values
+//Calculate and Publishes odometry from encoder values
 void calculate_odometry()
 {
   // Determining position
@@ -168,18 +229,28 @@ void calculate_odometry()
     odometry.pose.pose.position.x = x;
     odometry.pose.pose.position.y = y;
     odometry.pose.pose.position.z = 0.0;
+    odometry.pose.pose.orientation.x = 0.0;
+    odometry.pose.pose.orientation.y = 0.0;
+    odometry.pose.pose.orientation.z = theta;
+    odometry.pose.pose.orientation.w = 0.0;
+
+    odom.publish(&odometry);
+
 }
+
 
 //Calculate joint states from encoder values
 sensor_msgs::JointState calculate_joint_states()
 {
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
-  joint_states.name = 'revolute';
-  *joint_states.position = theta; //CORRRECTION
-  *joint_states.velocity = (vel_right + vel_left)/2;  //CORRECTION
+  joint_states.name = 'left_motor','right_motor';
+  *joint_states.position=pos_left_mm,pos_right_mm;
+  *joint_states.velocity=vel_left,vel_right;
+  //*joint_states.position = theta; //CORRRECTION
+  //*joint_states.velocity = (vel_right + vel_left)/2;  //CORRECTION
   //joint_states.effort=;
   return joint_states;
-  
+  Joint_States.publish(&joint_states);
 }
 
 //Calculate acceleration from IMU values
@@ -253,12 +324,14 @@ void setup()
 
   //ROS Publishers and subscribers
   node.initNode();
+  //node.subscribe(twist_subscriber);
+  /*
   node.advertise(odometry_publisher);
   node.advertise(imu_publisher);
   node.advertise(transform_publisher);
   node.advertise(joint_state_publisher);
   node.subscribe(twist_subscriber);
-  
+  */
 }
 
 //Write your program logic
@@ -276,6 +349,16 @@ void loop()
   digitalWrite(INT_1, HIGH);
   digitalWrite(INT_2, LOW);
   
+  calculate_imu();
+  calculate_transform();
+  calculate_odometry();
+  velocity_callback(cmd_vel);   //possible source of error
+  left_traverse(vel_left);
+  right_traverse(vel_right);
+
+  //publishOdometry(LOOPTIME);
+
+  /*
   delay(1000);
 
   digitalWrite(INT_3, LOW);
@@ -287,4 +370,5 @@ void loop()
   
   node.spinOnce();
   delay(1000);
+  */
 }
