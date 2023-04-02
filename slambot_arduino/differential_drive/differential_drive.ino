@@ -241,9 +241,9 @@ void calculate_odometry()
 sensor_msgs::JointState calculate_joint_states()
 {
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
-  joint_states.name = 'left_motor','right_motor';
-  *joint_states.position=pos_left_mm,pos_right_mm;
-  *joint_states.velocity=vel_left,vel_right;
+  *joint_states.name = "left_motor", "right_motor";
+  *joint_states.position = pos_left_mm, pos_right_mm;
+  *joint_states.velocity = vel_left, vel_right;
   //*joint_states.position = theta; //CORRRECTION
   //*joint_states.velocity = (vel_right + vel_left)/2;  //CORRECTION
   //joint_states.effort=;
@@ -352,6 +352,7 @@ void loop()
   calculate_imu();
   calculate_transform();
   calculate_odometry();
+  calculate_joint_states();
   left_traverse(vel_left);
   right_traverse(vel_right);
 
