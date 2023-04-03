@@ -2,6 +2,11 @@
   <!-- Arguments -->
   <arg name="open_rviz" default="true"/>
 
+  <!--Bringup-->
+  <include file="$(find slambot_bringup)/launch/slambot_remote.launch">
+    <arg name="model" value="slambot" />
+  </include>
+
 
   <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration, RTAB-Map -->
   <include file="$(find slambot_simulation)/launch/slambot_gmapping.launch"/>
