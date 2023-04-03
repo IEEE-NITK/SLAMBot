@@ -7,9 +7,24 @@
 #include <sensor_msgs/JointState.h>
 #include <tf2_msgs/TFMessage.h>
 
-#define looptime 100
 
-//constants
+//Declare global variables
+ros::NodeHandle node;                   //initialise ros node 
+geometry_msgs::TransformStamped t;
+
+nav_msgs::Odometry odometry;
+sensor_msgs::Imu imu_msg;
+sensor_msgs::JointState joint_states;
+tf2_msgs::TFMessage transform;
+geometry_msgs::Twist cmd_vel;         
+geometry_msgs::Vector3 acc, gyro;
+ros::Publisher mpu_acc("imu/accelerometer", &acc);
+ros::Publisher mpu_gyro("/imu/data", &imu_msg);
+
+
+MPU6050 mpu;
+//const int MPU = 0x68; // MPU6050 I2C address
+
 float g = 9.81;//value of gravitation acceleration
 float pi = 3.14159;//value of Pi
 
@@ -21,12 +36,12 @@ int ENC2A  = 18;
 int ENC2B = 19; // Encoder pins for left motor
 
 //L298N Motor Driver
-int ENA = 5 ; //motor driver PWM pins for RIGHT motor
-int ENB = 10; //motor driver PWM pins for LEFT motor
-int INT_1 = 6; //direction control for RIGHT motor
-int INT_2 = 7; //direction control for RIGHT motor
-int INT_3 = 8; //direction control for LEFT motor
-int INT_4 = 9; //direction control for LEFT motor
+int ENA = 5 ; //motor driver PWM pins for Left motor
+int ENB = 10; //motor driver PWM pins for Right motor
+int INT_1 = 6; //direction control for left motor
+int INT_2 = 7; //direction control for left motor
+int INT_3 = 8; //direction control for right motor
+int INT_4 = 9; //direction control for right motor
 
 //Acceleration and Rotation rate values
 int16_t ax, ay, az;
@@ -52,11 +67,6 @@ double pos_right_diff = 0;
 double pos_average_diff = 0;
 double pos_total = 0;
 
-//Variables for Desired Traversal
-double pos_left_desired = 0;
-double pos_right_desired = 0;
-
-
 // tf variables to broadcast
 double y=0;                                   // position in y direction
 double x=0;                                   // position in x direction
@@ -77,40 +87,6 @@ float angle;
 float vel_right;
 float vel_left;
 
-void velocity_callback(const geometry_msgs::Twist &vel_msg)
-{
-  // based on twist.subscriber
-  linear_x = vel_msg.linear.x;
-  linear_y = vel_msg.linear.y;
-  angle = vel_msg.angular.z;
-
-  linear =sqrt(sq(linear_x) + sq(linear_y)); 
-
-  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
-  vel_left = linear * 2 - vel_right;               //left motor velocity
-}
-
-//Declare global variables
-ros::NodeHandle node;                   //initialise ros node 
-geometry_msgs::TransformStamped t;
-nav_msgs::Odometry odometry;
-sensor_msgs::Imu imu_msg;
-sensor_msgs::JointState joint_states;
-tf2_msgs::TFMessage transform;
-geometry_msgs::Twist cmd_vel;         
-geometry_msgs::Vector3 acc, gyro;
-
-//Delaring Publishers
-ros::Publisher mpu_acc("imu/accelerometer", &acc);
-ros::Publisher mpu_gyro("/imu/data", &gyro);
-ros::Publisher Joint_States("/joint_state", &joint_states);
-ros::Publisher odom("/odom", &odometry);
-
-//Declaring Subsribers
-ros::Subscriber<geometry_msgs::Twist> vel_msg("/cmd_vel", velocity_callback);
-
-
-MPU6050 mpu;
 
 //Left motor encoder counter
 void encoderLeftMotor() {
@@ -136,71 +112,32 @@ void encoderRightMotor() {
   }
 }
 
-//move left motor
-void left_traverse(float vel_left)
+//Calculate motor velocities inside this
+void velocity_callback(const geometry_msgs::Twist &vel_msg)
 {
-  int encoder_count;
-  encoder_count = (vel_left * looptime * encoderppr)/(2 * PI * radius);
+  // based on twist.subscriber
+  linear_x = cmd_vel.linear.x;
+  linear_y = cmd_vel.linear.y;
+  angle = cmd_vel.angular.z;
 
-  if(encoder_count < 0)
-  {
-    analogWrite(ENB, 50); 
-    digitalWrite(INT_3, HIGH);
-    digitalWrite(INT_4, LOW);
+  linear =sqrt(sq(linear_x) + sq(linear_y)); 
 
-  }
-    else if(encoder_count > 0)
-  {
-    analogWrite(ENB, 50); 
-    digitalWrite(INT_3, LOW);
-    digitalWrite(INT_4, HIGH);
-  }
-  else if(encoder_count == 0)
-  {
-    analogWrite(ENB, 50); 
-    digitalWrite(INT_3, LOW);
-    digitalWrite(INT_4, LOW);
-  }
-
+  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
+  vel_left = linear * 2 - vel_right;               //left motor velocity
+  
+ 
 }
 
-//move right motor
-void right_traverse(float vel_right)
-{
-  int encoder_count;
-  encoder_count = (vel_right * looptime * encoderppr)/(2 * PI * radius);
-
-  if(encoder_count < 0)
-  {
-    analogWrite(ENA, 50); 
-    digitalWrite(INT_1, HIGH);
-    digitalWrite(INT_2, LOW);
-
-  }
-    else if(encoder_count > 0)
-  {
-    analogWrite(ENA, 50); 
-    digitalWrite(INT_1, LOW);
-    digitalWrite(INT_2, HIGH);
-  }
-  else if(encoder_count == 0)
-  {
-    analogWrite(ENA, 50); 
-    digitalWrite(INT_1, LOW);
-    digitalWrite(INT_2, LOW);
-  }
-
-}
 
 //Calculate transform for base_footprint
 void calculate_transform()
 {
-  //theta += ((pos_left_diff-pos_right_diff)/wheel_base);
-  //please complete the function
-  t.transform.rotation.z = theta;
+    theta += ((pos_left_diff-pos_right_diff)/wheel_base);
+    //please complete the function
+    t.transform.rotation.z = theta;
 }
 
-//Calculate and Publishes odometry from encoder values
+//Calculate odometry from encoder values
 void calculate_odometry()
 {
   // Determining position
@@ -227,40 +164,32 @@ void calculate_odometry()
     odometry.pose.pose.position.x = x;
     odometry.pose.pose.position.y = y;
     odometry.pose.pose.position.z = 0.0;
-    odometry.pose.pose.orientation.x = 0.0;
-    odometry.pose.pose.orientation.y = 0.0;
-    odometry.pose.pose.orientation.z = theta;
-    odometry.pose.pose.orientation.w = 0.0;
-
-    odom.publish(&odometry);
-
 }
-
 
 //Calculate joint states from encoder values
 sensor_msgs::JointState calculate_joint_states()
 {
   /*string[] name, float64[] position, float64[] velocity, float64[] effort*/
-  *joint_states.name = "left_motor", "right_motor";
-  *joint_states.position = pos_left_mm, pos_right_mm;
-  *joint_states.velocity = vel_left, vel_right;
-  //*joint_states.position = theta; //CORRRECTION
-  //*joint_states.velocity = (vel_right + vel_left)/2;  //CORRECTION
+  joint_states.name = 'revolute';
+  *joint_states.position = theta;
+  *joint_states.velocity = (vel_right + vel_left)/2;  
   //joint_states.effort=;
   return joint_states;
-  Joint_States.publish(&joint_states);
+  
 }
 
 //Calculate acceleration from IMU values
-sensor_msgs::Imu calculate_imu()
+/*sensor_msgs::Imu calculate_imu()
 {
+  mpu.CalibrateGyro();
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  /*
-  mpu.getAcceleration(&ax, &ay, &az);
-  mpu.getRotation(&gx, &gy, &gz);
+  
+  //mpu.getAcceleration(&ax, &ay, &az);
+  //mpu.getRotation(&gx, &gy, &gz);
   //mpu.read_acc();//get data from the accelerometer
-  //pu.read_gyro();//get data from the gyroscope\
-  */
+  //mpu.read_gyro();//get data from the gyroscope\
+  
+
 
   //converts accel values to m per sec^2
   acc.x = ((float)ax*g)/16384;
@@ -270,21 +199,20 @@ sensor_msgs::Imu calculate_imu()
   //convert of gyro values to rad/sec^2 
   gyro.x = ((float)gx*pi)/180;
   gyro.y = ((float)gy*pi)/180;
-  gyro.z = ((float)gz*pi)/180;
+  gyro.z = ((float)gz*pi)/180;*
 
-  mpu_acc.publish(&acc);
-  mpu_gyro.publish(&gyro);
-}
+  imu_msg.publish(&acc);
+  imu_msg.publish(&gyro);
+
+  gyro.publish(imu_msg);
+  return imu_msg;
+}*/
 
 //Initialise nodes, publishers, subscribers and serial monitor
 void setup()
 {
   Serial.begin(9600);                           //modified baudrate
   Serial.println("Starting...");
-
-  //Initializing IMU
-  mpu.initialize();
-  mpu.CalibrateGyro(6);
   
   //Initial Setup for Encoder
   pinMode(ENC1A,INPUT);
@@ -324,12 +252,13 @@ void setup()
   */
 
   //ROS Publishers and subscribers
-  node.initNode();
-  node.subscribe(vel_msg);
-  node.advertise(odom);
-  node.advertise(mpu_gyro);
-  node.advertise(mpu_acc);
-  node.advertise(Joint_States);
+  /*node.initNode();
+  node.advertise(odometry_publisher);
+  node.advertise(imu_publisher);
+  node.advertise(transform_publisher);
+  node.advertise(joint_state_publisher);
+  node.subscribe(twist_subscriber);
+  */
 }
 
 //Write your program logic
@@ -337,36 +266,30 @@ void loop()
 {
   //Controlling speed (0 = off and 255 = max speed):
   /*Caution: The motors are 300 rpm please don't use PWM values greater than 75*/
-  /*
-  analogWrite(ENA, 50); //ENA pin
-  analogWrite(ENB, 50); //ENB pin
+  analogWrite(ENA, 0); //ENA pin //RIGHT
+  analogWrite(ENB, 0); //ENB pin
 
   //Controlling spin direction of motors:
-  digitalWrite(INT_4, HIGH);
-  digitalWrite(INT_3, LOW);
+  //digitalWrite(INT_4, HIGH);
+  //digitalWrite(INT_3, LOW);
 
   digitalWrite(INT_2, HIGH);
   digitalWrite(INT_1, LOW);
-  */
- 
-  calculate_imu();
-  calculate_transform();
-  calculate_odometry();
-  calculate_joint_states();
-  left_traverse(vel_left);
-  right_traverse(vel_right);
+  
 
-  //publishOdometry(LOOPTIME);
+  Serial.println("Encoder Count");
+  Serial.println(pulses_right);
+  Serial.println(pulses_left);
+  Serial.println(".........................");
 
+  
   /*
-  delay(1000);
-
-  digitalWrite(INT_3, LOW);
-  digitalWrite(INT_4, HIGH);
-
-  digitalWrite(INT_1, LOW);
-  digitalWrite(INT_2, HIGH);
-  delay(1000);
+  Serial.println("Encoder Count");
+  Serial.println(pulses_right);
+  Serial.println(pulses_left);
+  Serial.println(".........................");
   */
   node.spinOnce();
+
+  //delay(2000);
 }
