@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   diagnostic_msgs
-  slambot_msgs
+
 )
 
 ################################################################################
@@ -34,7 +34,7 @@ find_package(catkin REQUIRED COMPONENTS
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
 catkin_package(
-  CATKIN_DEPENDS roscpp std_msgs sensor_msgs  slambot_msgs
+  CATKIN_DEPENDS roscpp std_msgs sensor_msgs 
 )
 
 ################################################################################
