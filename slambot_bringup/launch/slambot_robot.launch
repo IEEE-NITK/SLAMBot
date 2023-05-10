@@ -1,13 +1,17 @@
 <launch>
   <arg name="multi_robot_name" default=""/>
   <arg name="set_lidar_frame_id" default="base_scan"/>
+  <arg name="arduino_port" default="/dev/ttyACM0"/>
+  <arg name="lidar_port" default="/dev/ttyUSB0"/>
 
   <include file="$(find slambot_bringup)/launch/slambot_core.launch">
     <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
-  </include>
-  <include file="$(find slambot_bringup)/launch/slambot_lidar.launch">
-    <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+    <arg name="port" value="$(arg arduino_port)"/>
   </include>
 
-  
+  <include file="$(find slambot_bringup)/launch/slambot_lidar.launch">
+    <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+    <arg name="port" value="$(arg lidar_port)"/>
+  </include>
+
 </launch>
