@@ -14,4 +14,8 @@
     <arg name="port" value="$(arg lidar_port)"/>
   </include>
 
+  <include file="$(find slambot_bringup)/launch/slambot_model.launch">
+    <arg name="multi_robot_name" value="$(arg multi_robot_name)"/>
+  </include>
+
 </launch>
