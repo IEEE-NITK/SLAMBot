@@ -80,14 +80,14 @@ float vel_left;
 void velocity_callback(const geometry_msgs::Twist &vel_msg)
 {
   // based on twist.subscriber
-  linear_x = vel_msg.linear.x;
-  linear_y = vel_msg.linear.y;
+  linear_x = -1*vel_msg.linear.x;
+  //linear_y = vel_msg.linear.y;
   angle = vel_msg.angular.z;
 
-  linear =sqrt(sq(linear_x) + sq(linear_y)); 
+  //linear =sqrt(sq(linear_x) + sq(linear_y)); 
 
-  vel_right = (angle * wheel_base) / 2 + linear;   //right motor velocity
-  vel_left = linear * 2 - vel_right;               //left motor velocity
+  vel_right = (angle * wheel_base) / 2 + linear_x;   //right motor velocity
+  vel_left = linear_x * 2 - vel_right;               //left motor velocity
 }
 
 //Declare global variables
@@ -144,20 +144,20 @@ void left_traverse(float vel_left)
 
   if(encoder_count < 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENB, 40); 
     digitalWrite(INT_3, HIGH);
     digitalWrite(INT_4, LOW);
 
   }
     else if(encoder_count > 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENB, 40); 
     digitalWrite(INT_3, LOW);
     digitalWrite(INT_4, HIGH);
   }
   else if(encoder_count == 0)
   {
-    analogWrite(ENB, 50); 
+    analogWrite(ENB, 40); 
     digitalWrite(INT_3, LOW);
     digitalWrite(INT_4, LOW);
   }
@@ -172,20 +172,20 @@ void right_traverse(float vel_right)
 
   if(encoder_count < 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENA, 40); 
     digitalWrite(INT_1, HIGH);
     digitalWrite(INT_2, LOW);
 
   }
     else if(encoder_count > 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENA, 40); 
     digitalWrite(INT_1, LOW);
     digitalWrite(INT_2, HIGH);
   }
   else if(encoder_count == 0)
   {
-    analogWrite(ENA, 50); 
+    analogWrite(ENA, 40); 
     digitalWrite(INT_1, LOW);
     digitalWrite(INT_2, LOW);
   }
@@ -279,7 +279,7 @@ sensor_msgs::Imu calculate_imu()
 //Initialise nodes, publishers, subscribers and serial monitor
 void setup()
 {
-  Serial.begin(9600);                           //modified baudrate
+  Serial.begin(57600);                           //modified baudrate
   Serial.println("Starting...");
 
   //Initializing IMU
