@@ -1,5 +1,5 @@
 <launch>
-  <arg name="set_frame_id" default="base_scan"/>
+  <arg name="set_frame_id" default="lidar_1"/>
   <arg name="port" default="/dev/ttyUSB0"/>
 
   <node pkg="rplidar_ros" type="rplidarNode" name="slambot_lidar" output="screen">

@@ -1,6 +1,6 @@
 <launch>
-  <arg name="multi_robot_name" default=""/>
-  <arg name="set_lidar_frame_id" default="base_scan"/>
+  <arg name="multi_robot_name" default="robot1"/>
+  <arg name="set_lidar_frame_id" default="lidar_1"/>
   <arg name="arduino_port" default="/dev/ttyACM0"/>
   <arg name="lidar_port" default="/dev/ttyUSB0"/>
 
