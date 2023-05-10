@@ -3,13 +3,11 @@
   <arg name="open_rviz" default="true"/>
   <arg name="scan_topic" default="/slambot/laser/scan"/>
 
-  <!--Bringup-->
-  <!-- <include file="$(find slambot_bringup)/launch/slambot_remote.launch">
-    <arg name="model" value="slambot" />
-  </include> -->
+  <!--SLAMBot-->
+  <include file="$(find slambot_bringup)/launch/slambot_remote.launch"/>
 
 
-  <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration, RTAB-Map -->
+  <!-- SLAM: Gmapping -->
   <include file="$(find slambot_simulation)/launch/slambot_gmapping.launch">
     <arg name="set_scan_topic" value="$(arg scan_topic)"/>
   </include>
