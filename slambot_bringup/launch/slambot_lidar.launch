@@ -2,7 +2,7 @@
   <arg name="set_frame_id" default="base_scan"/>
   <arg name="port" default="/dev/ttyUSB0"/>
 
-  <node pkg="rpilidar_ros" type="rplidarNode" name="slambot_lidar" output="screen">
+  <node pkg="rplidar_ros" type="rplidarNode" name="slambot_lidar" output="screen">
     <param name="serial_port" value="$(arg port)"/>
     <param name="frame_id" value="$(arg set_frame_id)"/>
   </node>
