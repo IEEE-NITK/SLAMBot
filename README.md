@@ -273,6 +273,9 @@ The robot is simulated in Gazebo, a powerful, open-source 3D robotics simulator 
 2. [Turtlebot](https://www.turtlebot.com/about/)
 3. [SLAM and Turtlebot](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/)
 
+## Project Guide:
+[Shobuj Paul](https://github.com/Shobuj-Paul)
+
 ## Project Mentors:
 
 1. [Shivani Chanda](https://github.com/Shivani-Chanda)
