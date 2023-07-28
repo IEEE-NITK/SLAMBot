@@ -73,7 +73,10 @@
 This project aims to put together a mobile robot similar to a TurtleBot. A TurtleBot is a low-cost personal robot kit with open-source software.
 
 ![SlamBot](assets/slambot.png)
-*SLAMBot*
+*SLAMBot Rendition*
+
+![SlamBot Model](assets/slambot_model.jpg)
+*Working model of SLAMBot*
 
 ### Technologies Used
 [![Tech_Used](https://skills.thijs.gg/icons?i=ros,py,cpp,arduino,raspberrypi&theme=dark)](https://skills.thijs.gg)
