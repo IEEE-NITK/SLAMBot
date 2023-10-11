@@ -1,5 +1,7 @@
 # SLAMBot
 
+### Winner of the [IEEE Undergraduate Project Video Competition](https://sac.ieeer10.org/ug-student-project-video-contest/)!
+
 [![GitHub issues](https://img.shields.io/github/issues/IEEE-NITK/SLAMBot?color=red&label=Issues&style=flat)](https://github.com/IEEE-NITK/SLAMBot/issues)
 [![GitHub license](https://img.shields.io/github/license/IEEE-NITK/SLAMBot?color=green&label=License&style=flat)](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu%2020.04-%E2%9C%94-blue)
