@@ -1,6 +1,16 @@
 # SLAMBot
 
-### Winner of the [IEEE Undergraduate Project Video Competition](https://sac.ieeer10.org/ug-student-project-video-contest/)!
+
+## Achievements
+
+- <span style="font-size: 1.2em;">**Winner of the IEEE R10 Undergraduate Project Video Competition 2023**</span>
+  - <span style="font-size: 1.2em;">Category: AI and Robotics</span>
+  - <span style="font-size: 1.2em;">[View Announcement](https://sac.ieeer10.org/ug-student-project-video-contest/)</span>
+- <span style="font-size: 1.2em;">**Featured on IEEE R10 SAC LinkedIn page**</span>
+  - <span style="font-size: 1.2em;">[Check out the post](https://www.linkedin.com/feed/update/urn:li:activity:7112096967022845952/)</span>
+- <span style="font-size: 1.2em;">**IEEE R10 Undergraduate Student Project Video Contest Submission**</span>
+  - <span style="font-size: 1.2em;">[Watch the Video](https://www.youtube.com/watch?v=xg2uQ87B_d8)</span>
+
 
 [![GitHub issues](https://img.shields.io/github/issues/IEEE-NITK/SLAMBot?color=red&label=Issues&style=flat)](https://github.com/IEEE-NITK/SLAMBot/issues)
 [![GitHub license](https://img.shields.io/github/license/IEEE-NITK/SLAMBot?color=green&label=License&style=flat)](https://github.com/IEEE-NITK/SLAMBot/blob/main/LICENSE)
